@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 
 namespace LeetCode.Tests;
 
@@ -316,7 +317,7 @@ public static class Questions
         foreach (var num in nums)
         {
             int complement = k - num;
-            if(complement <= 0)
+            if (complement <= 0)
             {
                 continue;
             }
@@ -343,11 +344,188 @@ public static class Questions
         return operations;
     }
 
+
+    // https://leetcode.com/problems/maximum-average-subarray-i
+    public static double FindMaxAverage(int[] nums, int k)
+    {
+        int current = 0;
+
+        for (int i = 0; i < k; i++)
+        {
+            current += nums[i];
+        }
+
+        int max = current;
+
+        for (int i = k; i < nums.Length; i++)
+        {
+            current = current - nums[i - k] + nums[i];
+            if (current > max)
+            {
+                max = current;
+            }
+        }
+        return (double)max / k;
+    }
+
+    // https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length
+    public static int MaxVowels(string s, int k)
+    {
+        int vowelCount = 0;
+        for (int i = 0; i < k; i++)
+        {
+            if (IsVowel(s[i]))
+            {
+                vowelCount++;
+            }
+        }
+
+        int max = vowelCount;
+
+        for (int i = k; i < s.Length; i++)
+        {
+            if (IsVowel(s[i]))
+            {
+                vowelCount++;
+            }
+            if (IsVowel(s[i - k]))
+            {
+                vowelCount--;
+            }
+            if (max < vowelCount)
+            {
+                max = vowelCount;
+            }
+        }
+
+        return max;
+    }
+
+    // https://leetcode.com/problems/max-consecutive-ones-iii
+    public static int LongestOnes(int[] nums, int k)
+    {
+        int i = 0, j = 0;
+        while (j < nums.Length)
+        {
+            if (nums[j++] == 0)
+            {
+                k--;
+            }
+            if (k < 0)
+            {
+                if (nums[i++] == 0)
+                {
+                    k++;
+                }
+            }
+        }
+        return j - i;
+    }
+
+    // https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element
+    public static int LongestSubarray(int[] nums)
+    {
+        string s = string.Join("", nums);
+        string[] splitted = s.Split('0');
+
+        // all ones and we need to delete at least 1 element
+        if (splitted.Length == 1)
+        {
+            return s.Length - 1;
+        }
+
+        int max = 0;
+        for (int i = 0; i < splitted.Length - 1; i++)
+        {
+            int current = splitted[i].Length + splitted[i + 1].Length;
+            if (current > max)
+            {
+                max = current;
+            }
+        }
+        return max;
+    }
+
+    // https://leetcode.com/problems/find-the-highest-altitude
+    public static int LargestAltitude(int[] gain)
+    {
+        int max = 0, current = 0;
+        for (int i = 0; i < gain.Length; i++)
+        {
+            current += gain[i];
+            if (current > max)
+            {
+                max = current;
+            }
+        }
+        return max;
+    }
+
+    // https://leetcode.com/problems/find-pivot-index
+    public static int PivotIndex(int[] nums)
+    {
+        int sumRight = nums.Sum();
+        int sumLeft = 0;
+
+        for (int i = 0; i < nums.Length; i++)
+        {
+            sumRight -= nums[i];
+
+            if (sumLeft == sumRight)
+            {
+                return i;
+            }
+            sumLeft += nums[i];
+        }
+        return -1;
+    }
+
+    // https://leetcode.com/problems/find-the-difference-of-two-arrays
+    public static IList<IList<int>> FindDifference(int[] nums1, int[] nums2)
+    {
+        IList<int> answer1 = nums1.ToList().Except([.. nums2]).ToList();
+        IList<int> answer2 = nums2.ToList().Except([.. nums1]).ToList();
+
+        IList<IList<int>> answer = [answer1, answer2];
+        return answer;
+    }
+
+    // https://leetcode.com/problems/unique-number-of-occurrences
+    public static bool UniqueOccurrences(int[] arr)
+    {
+        Dictionary<int, int> countMap = [];
+        HashSet<int> storage = new HashSet<int>();
+
+        foreach (int i in arr)
+        {
+            if (countMap.TryGetValue(i, out int value))
+            {
+                countMap[i] = ++value;
+            }
+            else
+            {
+                countMap[i] = 0;
+            }
+        }
+
+        
+        foreach (var key in countMap)
+            if (storage.Contains(key.Value)) 
+                return false;
+            else storage.Add(key.Value);
+
+        return true;
+    }
+
     #region [ Helpers ]
 
     private static int Gcd(int a, int b)
     {
         return b == 0 ? a : Gcd(b, a % b);
+    }
+    private static bool IsVowel(char s)
+    {
+        return s == 'a' || s == 'e' || s == 'i' || s == 'o' || s == 'u';
     }
 
     #endregion

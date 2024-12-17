@@ -1,4 +1,6 @@
-﻿namespace LeetCode.Tests;
+﻿using LeetCode.Tests.TheoryData;
+
+namespace LeetCode.Tests;
 
 public class QuestionTests
 {
@@ -83,8 +85,8 @@ public class QuestionTests
     }
 
     [Theory]
-    [InlineData(new int[]{ 1, 2, 3, 4 }, new int[] { 24, 12, 8, 6 })]
-    [InlineData(new int[]{ -1, 1, 0, -3, 3 }, new int[] { 0, 0, 9, 0, 0 })]
+    [InlineData(new int[] { 1, 2, 3, 4 }, new int[] { 24, 12, 8, 6 })]
+    [InlineData(new int[] { -1, 1, 0, -3, 3 }, new int[] { 0, 0, 9, 0, 0 })]
     public void ProductExceptSelf(int[] nums, int[] expectedOutput)
     {
         int[] output = Questions.ProductExceptSelf(nums);
@@ -147,4 +149,86 @@ public class QuestionTests
         int output = Questions.MaxOperations(nums, k);
         Assert.Equal(expectedOutput, output);
     }
+
+    [Theory]
+    [InlineData(new int[] { 1, 12, -5, -6, 50, 3 }, 4, 12.75)]
+    [InlineData(new int[] { 5 }, 1, 5)]
+    public void FindMaxAverage(int[] nums, int k, double expectedOutput)
+    {
+        double output = Questions.FindMaxAverage(nums, k);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData("abciiidef", 3, 3)]
+    [InlineData("aeiou", 2, 2)]
+    [InlineData("leetcode", 3, 2)]
+    [InlineData("weallloveyou", 7, 4)]
+    public void MaxVowels(string s, int k, int expectedOutput)
+    {
+        int output = Questions.MaxVowels(s, k);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0 }, 2, 6)]
+    [InlineData(new int[] { 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1 }, 3, 10)]
+    [InlineData(new int[] { 0, 0, 0 }, 0, 0)]
+    [InlineData(new int[] { 1, 1, 1, 0, 0, 0, 0 }, 1, 4)]
+    [InlineData(new int[] { 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 }, 1, 5)]
+    public void LongestOnes(int[] nums, int k, int expectedOutput)
+    {
+        int output = Questions.LongestOnes(nums, k);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { 1, 1, 0, 1 }, 3)]
+    [InlineData(new int[] { 0, 1, 1, 1, 0, 1, 1, 0, 1 }, 5)]
+    [InlineData(new int[] { 1, 1, 1 }, 2)]
+    [InlineData(new int[] { 0, 0, 0 }, 0)]
+    public void LongestSubarray(int[] nums, int expectedOutput)
+    {
+        int output = Questions.LongestSubarray(nums);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { -5, 1, 5, 0, -7 }, 1)]
+    [InlineData(new int[] { -4, -3, -2, -1, 4, 3, 2 }, 0)]
+    public void LargestAltitude(int[] nums, int expectedOutput)
+    {
+        int output = Questions.LargestAltitude(nums);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { 1, 7, 3, 6, 5, 6 }, 3)]
+    [InlineData(new int[] { 1, 2, 3 }, -1)]
+    public void PivotIndex(int[] nums, int expectedOutput)
+    {
+        int output = Questions.PivotIndex(nums);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [ClassData(typeof(FindDifferenceTestData))]
+    public void FindDifference(int[] nums1, int[] nums2, IList<IList<int>> expectedOutput)
+    {
+        var output = Questions.FindDifference(nums1, nums2);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { 1, 2, 2, 1, 1, 3 }, true)]
+    [InlineData(new int[] { 1, 2 }, false)]
+    [InlineData(new int[] { -4, 3, 3 }, true)]
+    [InlineData(new int[] { 2, 2 }, true)]
+    [InlineData(new int[] { 3, 5, -2, -3, -6, -6 }, false)]
+    public void UniqueOccurrences(int[] nums, bool expectedOutput)
+    {
+        bool output = Questions.UniqueOccurrences(nums);
+        Assert.Equal(expectedOutput, output);
+    }
+
 }
