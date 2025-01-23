@@ -494,7 +494,7 @@ public static class Questions
     public static bool UniqueOccurrences(int[] arr)
     {
         Dictionary<int, int> countMap = [];
-        HashSet<int> storage = new HashSet<int>();
+        HashSet<int> storage = [];
 
         foreach (int i in arr)
         {
@@ -515,6 +515,95 @@ public static class Questions
             else storage.Add(key.Value);
 
         return true;
+    }
+
+    // https://leetcode.com/problems/determine-if-two-strings-are-close
+    public static bool CloseStrings(string word1, string word2)
+    {
+        // If the strings have different lengths, they can't be close
+        if (word1.Length != word2.Length)
+        {
+            return false;
+        }
+
+        HashSet<char> set1 = new(word1);
+        HashSet<char> set2 = new(word2);
+
+        // Check if the character sets of both strings are the same
+        if (!set1.SetEquals(set2))
+            return false;
+
+        // Count the frequency of each character in both strings
+        Dictionary<char, int> frequency1 = [];
+        Dictionary<char, int> frequency2 = [];
+
+        for(int i = 0; i < word1.Length; i++)
+        {
+            // frequency map for word1
+            if (!frequency1.TryGetValue(word1[i], out int value))
+            {
+                frequency1[word1[i]] = 0;
+            }
+            else
+            {
+                frequency1[word1[i]] = ++value;
+            }
+
+            // frequency map for word2
+            if (!frequency2.TryGetValue(word2[i], out int value2))
+            {
+                frequency2[word2[i]] = 0;
+            }
+            else
+            {
+                frequency2[word2[i]] = ++value2;
+            }
+        }
+
+        List<int> sortedFreq1 = [.. frequency1.Values.OrderBy(x => x)];
+        List<int> sortedFreq2 = [.. frequency2.Values.OrderBy(x => x)];
+
+        return sortedFreq1.SequenceEqual(sortedFreq2);
+    }
+
+    // https://leetcode.com/problems/equal-row-and-column-pairs
+    public static int EqualPairs(int[][] grid)
+    {
+        int n = grid.Length;
+
+        // Store row frequencies using arrays as keys
+        Dictionary<string, int> rowFrequency = [];
+
+        for (int i = 0; i < n; i++)
+        {
+            // Convert row to a hashable key (comma-separated string)
+            string rowKey = string.Join(",", grid[i]);
+            if (!rowFrequency.ContainsKey(rowKey))
+                rowFrequency[rowKey] = 0;
+            rowFrequency[rowKey]++;
+        }
+
+        int result = 0;
+
+        // Count matching columns using the same dictionary
+        for (int j = 0; j < n; j++)
+        {
+            // Build column key
+            List<int> columnKey = [];
+            for (int i = 0; i < n; i++)
+            {
+                columnKey.Add(grid[i][j]);
+            }
+            string columnKeyStr = string.Join(",", columnKey);
+
+            // If the column matches a row, add its frequency
+            if (rowFrequency.TryGetValue(columnKeyStr, out int value))
+            {
+                result += value;
+            }
+        }
+
+        return result;
     }
 
     #region [ Helpers ]

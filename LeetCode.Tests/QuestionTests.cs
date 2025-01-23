@@ -231,4 +231,22 @@ public class QuestionTests
         Assert.Equal(expectedOutput, output);
     }
 
+    [Theory]
+    [InlineData("abc", "bca", true)]
+    [InlineData("a", "aa", false)]
+    [InlineData("cabbba", "abbccc", true)]
+    public void CloseStrings(string word1, string word2, bool expectedOutput)
+    {
+        bool output = Questions.CloseStrings(word1, word2);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [ClassData(typeof(EqualPairs))]
+    public void EqualPairs(int[][] grid, int expectedOutput)
+    {
+        int output = Questions.EqualPairs(grid);
+        Assert.Equal(expectedOutput, output);
+    }
+
 }
