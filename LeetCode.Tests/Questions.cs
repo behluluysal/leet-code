@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LeetCode.Tests;
 
@@ -508,9 +510,9 @@ public static class Questions
             }
         }
 
-        
+
         foreach (var key in countMap)
-            if (storage.Contains(key.Value)) 
+            if (storage.Contains(key.Value))
                 return false;
             else storage.Add(key.Value);
 
@@ -537,7 +539,7 @@ public static class Questions
         Dictionary<char, int> frequency1 = [];
         Dictionary<char, int> frequency2 = [];
 
-        for(int i = 0; i < word1.Length; i++)
+        for (int i = 0; i < word1.Length; i++)
         {
             // frequency map for word1
             if (!frequency1.TryGetValue(word1[i], out int value))
@@ -604,6 +606,109 @@ public static class Questions
         }
 
         return result;
+    }
+
+    // https://leetcode.com/problems/removing-stars-from-a-string/description
+    public static string RemoveStars(string s)
+    {
+        Stack<char> stack = [];
+        foreach (var item in s)
+        {
+            if (!item.Equals('*'))
+            {
+                stack.Push(item);
+            }
+            else if (stack.Count > 0)
+            {
+                stack.Pop();
+            }
+        }
+        return new string(stack.Reverse().ToArray());
+    }
+
+    // https://leetcode.com/problems/asteroid-collision
+    public static int[] AsteroidCollision(int[] asteroids)
+    {
+        Stack<int> remainingAstroids = [];
+        foreach (var asteroid in asteroids)
+        {
+            bool isDestroyed = false;
+
+            // If the asteroid is going left (minus) check the stack (it will destroy the smaller ones on it's path)
+            while (remainingAstroids.Count > 0 && remainingAstroids.Peek() > 0 && asteroid < 0)
+            {
+                if (Math.Abs(remainingAstroids.Peek()) < Math.Abs(asteroid))
+                {
+                    // Top asteroid is smaller
+                    remainingAstroids.Pop();
+                }
+                else if (Math.Abs(remainingAstroids.Peek()) == Math.Abs(asteroid))
+                {
+                    // Both have same size
+                    remainingAstroids.Pop();
+                    isDestroyed = true;
+                    break;
+                }
+                else
+                {
+                    // Top asteroid is larger
+                    isDestroyed = true;
+                    break;
+                }
+
+            }
+            // If the current asteroid is not destroyed add to stack
+            if (!isDestroyed)
+            {
+                remainingAstroids.Push(asteroid);
+            }
+        }
+        return remainingAstroids.Reverse().ToArray();
+    }
+
+    // https://leetcode.com/problems/decode-string
+    public static string DecodeString(string s)
+    {
+        Stack<char> stack = new();
+        foreach (var c in s)
+        {
+            if (c == ']')
+            {
+                // when we find the ], reverse the loop and decode the string
+                StringBuilder builderForString = new();
+                while (stack.Peek() != '[')
+                {
+                    builderForString.Insert(0, stack.Pop());
+                }
+
+                // Pop one more time to remove [
+                stack.Pop();
+
+                // Continue reverse loop until we find the repetation number
+                StringBuilder builderForRepetationNumber = new();
+                while (stack.Count != 0 && char.IsDigit(stack.Peek()))
+                {
+                    builderForRepetationNumber.Insert(0, stack.Pop());
+                }
+                int repetation = int.Parse(builderForRepetationNumber.ToString());
+                StringBuilder decodedString = new();
+                for (int i = 0; i < repetation; i++)
+                {
+                    decodedString.Append(builderForString);
+                }
+                foreach (char decodedChar in decodedString.ToString())
+                {
+                    stack.Push(decodedChar);
+                }
+            }
+            else
+            {
+                // continue adding to stack until we see ]
+                stack.Push(c);
+            }
+        }
+
+        return new string([.. stack.Reverse()]);
     }
 
     #region [ Helpers ]

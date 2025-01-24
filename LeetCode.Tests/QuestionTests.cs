@@ -249,4 +249,31 @@ public class QuestionTests
         Assert.Equal(expectedOutput, output);
     }
 
+    [Theory]
+    [InlineData("leet**cod*e", "lecoe")]
+    [InlineData("erase*****", "")]
+    public void RemoveStars(string s, string expectedOutput)
+    {
+        string output = Questions.RemoveStars(s);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { 5, 10, -5 }, new int[] { 5, 10 })]
+    [InlineData(new int[] { 8, -8 }, new int[] { })]
+    [InlineData(new int[] { 10, 2, -5 }, new int[] { 10 })]
+    public void AsteroidCollision(int[] asteroids, int[] expectedOutput)
+    {
+        int[] output = Questions.AsteroidCollision(asteroids);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData("3[a]2[bc]", "aaabcbc")]
+    [InlineData("3[a2[c]]", "accaccacc")]
+    public void DecodeString(string s, string expectedOutput)
+    {
+        string output = Questions.DecodeString(s);
+        Assert.Equal(expectedOutput, output);
+    }
 }
