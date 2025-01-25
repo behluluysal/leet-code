@@ -711,6 +711,60 @@ public static class Questions
         return new string([.. stack.Reverse()]);
     }
 
+    // https://leetcode.com/problems/dota2-senate
+    public static string PredictPartyVictory(string senate)
+    {
+        Queue<char> chars = new Queue<char>(senate);
+        int radiantCount = 0;
+        int direCount = 0;
+
+        foreach (char c in senate)
+        {
+            if (c == 'R')
+                radiantCount++;
+            else if (c == 'D')
+                direCount++;
+        }
+
+        int radiantPass = 0;
+        int direPass = 0;
+
+        while (radiantCount > 0 && direCount > 0)
+        {
+            char current = chars.Dequeue();
+
+            if (current == 'R')
+            {
+                if (direPass > 0)
+                {
+                    direPass--;
+                    radiantCount--;
+                }
+                else
+                {
+                    radiantPass++;
+                    chars.Enqueue(current);
+                }
+            }
+            else if (current == 'D')
+            {
+                if (radiantPass > 0)
+                {
+                    radiantPass--;
+                    direCount--;
+                }
+                else
+                {
+                    direPass++;
+                    chars.Enqueue(current);
+                }
+            }
+        }
+
+        return radiantCount > 0 ? "Radiant" : "Dire";
+    }
+
+
     #region [ Helpers ]
 
     private static int Gcd(int a, int b)

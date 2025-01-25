@@ -276,4 +276,26 @@ public class QuestionTests
         string output = Questions.DecodeString(s);
         Assert.Equal(expectedOutput, output);
     }
+
+    [Fact]
+    public void RecentCounter()
+    {
+        RecentCounter recentCounter = new();
+        _ = recentCounter.Ping(1);
+        _ = recentCounter.Ping(100);
+        _ = recentCounter.Ping(3001);
+        _ = recentCounter.Ping(3002);
+    }
+
+    [Theory]
+    [InlineData("RD", "Radiant")]
+    [InlineData("RDD", "Dire")]
+    [InlineData("RRRRDD", "Radiant")]
+    [InlineData("RRRDDDD", "Radiant")]
+    [InlineData("RRRDDDDDD", "Dire")]
+    public void PredictPartyVictory(string senate, string expectedOutput)
+    {
+        string output = Questions.PredictPartyVictory(senate);
+        Assert.Equal(expectedOutput, output);
+    }
 }
