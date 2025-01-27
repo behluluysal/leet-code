@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace LeetCode.Tests;
 
 public static class Questions
 {
+    #region [ Array / String ]
+
     // https://leetcode.com/problems/merge-strings-alternately
     public static string MergeAlternately(string word1, string word2)
     {
@@ -245,6 +244,10 @@ public static class Questions
         return newLenght;
     }
 
+    #endregion
+
+    #region [ Two Pointers ]
+
     // https://leetcode.com/problems/move-zeroes/
     public static int[] MoveZeroes(int[] nums)
     {
@@ -346,6 +349,9 @@ public static class Questions
         return operations;
     }
 
+    #endregion
+
+    #region [ Sliding Window ]
 
     // https://leetcode.com/problems/maximum-average-subarray-i
     public static double FindMaxAverage(int[] nums, int k)
@@ -448,6 +454,10 @@ public static class Questions
         return max;
     }
 
+    #endregion
+
+    #region [ Prefix Sum ]
+
     // https://leetcode.com/problems/find-the-highest-altitude
     public static int LargestAltitude(int[] gain)
     {
@@ -481,6 +491,10 @@ public static class Questions
         }
         return -1;
     }
+
+    #endregion
+
+    #region [ Hash Map / Set ]
 
     // https://leetcode.com/problems/find-the-difference-of-two-arrays
     public static IList<IList<int>> FindDifference(int[] nums1, int[] nums2)
@@ -608,6 +622,10 @@ public static class Questions
         return result;
     }
 
+    #endregion
+
+    #region [ Stack ]
+
     // https://leetcode.com/problems/removing-stars-from-a-string/description
     public static string RemoveStars(string s)
     {
@@ -711,6 +729,10 @@ public static class Questions
         return new string([.. stack.Reverse()]);
     }
 
+    #endregion
+
+    #region [ Queue ]
+
     // https://leetcode.com/problems/dota2-senate
     public static string PredictPartyVictory(string senate)
     {
@@ -764,6 +786,46 @@ public static class Questions
         return radiantCount > 0 ? "Radiant" : "Dire";
     }
 
+    #endregion
+
+    #region [ Linked List ]
+
+    // https://leetcode.com/problems/reverse-linked-list
+    public static ListNode ReverseList(ListNode head)
+    {
+        ListNode current = head;
+        ListNode previous = default!;
+
+        while (current != null)
+        {
+            ListNode temp = current.next;
+            current.next = previous;
+            previous = current;
+            current = temp;
+        }
+        return previous;
+    }
+
+
+    // https://leetcode.com/problems/maximum-twin-sum-of-a-linked-list
+    public static int PairSum(ListNode head)
+    {
+        (ListNode reversedListHead, int count) = ReverseListNodeNonDestructive(head);
+        int max = 0;
+        for (int i = 0; i < count / 2; i++)
+        {
+            int sum = reversedListHead.val + head.val;
+            if(sum > max)
+            {
+                max = sum;
+            }
+            reversedListHead = reversedListHead.next;
+            head = head.next;
+        }
+        return max;
+    }
+    #endregion
+
 
     #region [ Helpers ]
 
@@ -776,5 +838,30 @@ public static class Questions
         return s == 'a' || s == 'e' || s == 'i' || s == 'o' || s == 'u';
     }
 
+    private static (ListNode ReversedListHead, int Count) ReverseListNodeNonDestructive(ListNode head)
+    {
+        ListNode current = head;
+        ListNode reversedHead = default!;
+        int count = 0;
+
+        while (current != null)
+        {
+            ListNode newNode = new(current.val, reversedHead);
+            reversedHead = newNode;
+
+            current = current.next;
+            count++;
+        }
+        return (reversedHead, count);
+    }
+
+
     #endregion
+}
+
+
+public class ListNode(int val = 0, ListNode next = null)
+{
+    public int val = val;
+    public ListNode next = next;
 }

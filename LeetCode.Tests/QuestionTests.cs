@@ -298,4 +298,27 @@ public class QuestionTests
         string output = Questions.PredictPartyVictory(senate);
         Assert.Equal(expectedOutput, output);
     }
+
+    [Fact]
+    public void ReverseList()
+    {
+        ListNode head = new(1, new(2, new(3, new(4, new(5)))));
+        ListNode result = Questions.ReverseList(head);
+        List<int> output = [];
+        while(result != null)
+        {
+            output.Add(result.val);
+            result = result.next;
+        }
+        Assert.Equal([5, 4, 3, 2, 1], [.. output]);
+    }
+
+    [Fact]
+    public void PairSum()
+    {
+        ListNode head = new(5, new(4, new(2, new(1))));
+        int result = Questions.PairSum(head);
+        
+        Assert.Equal(6, result);
+    }
 }
