@@ -74,6 +74,27 @@ bool leafSimilar(TreeNode* root1, TreeNode* root2) {
     return endLeaves == endLeaves2;
 }
 
+int goodNodes(TreeNode* root, int maxValue) {
+    if (!root) return 0;
+
+    int count = (root->val >= maxValue) ? 1 : 0;
+    maxValue = std::max(maxValue, root->val);
+
+    return count + goodNodes(root->left, maxValue) + goodNodes(root->right, maxValue);
+}
+
+int pathSum(TreeNode* root, int targetSum) {
+    if (!root) return 0;
+
+    int count = countPaths(root, targetSum);
+
+    count += pathSum(root->left, targetSum);
+    count += pathSum(root->right, targetSum);
+
+    return count;
+}
+
+// Helper methods
 std::vector<int> collectLeafNodes(TreeNode* head, std::vector<int>& endLeaves) {
     if (!head) return endLeaves;
     if (!head->left && !head->right) {
@@ -83,4 +104,15 @@ std::vector<int> collectLeafNodes(TreeNode* head, std::vector<int>& endLeaves) {
     collectLeafNodes(head->left, endLeaves);
     collectLeafNodes(head->right, endLeaves);
     return endLeaves;
+}
+
+int countPaths(TreeNode* head, long targetSum) {
+    if (!head) return 0;
+
+    int count = (head->val == targetSum) ? 1 : 0;
+
+    count += countPaths(head->left, targetSum - head->val);
+    count += countPaths(head->right, targetSum - head->val);
+
+    return count;
 }

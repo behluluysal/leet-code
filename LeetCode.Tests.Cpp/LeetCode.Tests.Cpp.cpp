@@ -141,5 +141,37 @@ namespace LeetCodeTestsCpp
 			deleteBinaryTree(head);
 			deleteBinaryTree(head2);
 		}
+
+		TEST_METHOD(Test_TreeNode_GoodNodes)
+		{
+			TreeNode* head = createBinaryTree({ 3, 1, 4, 3, -1, 1, 5 });
+			int result = goodNodes(head);
+			Assert::AreEqual(4, result, L"Result was different.");
+			deleteBinaryTree(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_GoodNodes2)
+		{
+			TreeNode* head = createBinaryTree({ 9, -1, 3, 6 });
+			int result = goodNodes(head);
+			Assert::AreEqual(1, result, L"Result was different.");
+			deleteBinaryTree(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_PathSum)
+		{
+			TreeNode* head = createBinaryTree({ 10,5,-3,3,2,-1,11,3,-2,-1,1 });
+			int result = pathSum(head, 8);
+			Assert::AreEqual(3, result, L"Result was different.");
+			deleteBinaryTree(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_PathSum2)
+		{
+			TreeNode* head = createBinaryTree({ 5,4,8,11,-1,13,4,7,2,-1,-1,5,1 });
+			int result = pathSum(head, 22);
+			Assert::AreEqual(3, result, L"Result was different.");
+			deleteBinaryTree(head);
+		}
 	};
 }
