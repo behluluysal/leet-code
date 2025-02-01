@@ -173,5 +173,39 @@ namespace LeetCodeTestsCpp
 			Assert::AreEqual(3, result, L"Result was different.");
 			deleteBinaryTree(head);
 		}
+
+		TEST_METHOD(Test_TreeNode_LongestZigZag)
+		{
+			TreeNode* head = createBinaryTree({ 1,-1,2,3,4,-1,-1,5,6,-1,7,-1,-1,-1,8 });
+			int result = longestZigZag(head);
+			Assert::AreEqual(3, result, L"Result was different.");
+			deleteBinaryTree(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_LongestZigZag2)
+		{
+			TreeNode* head = createBinaryTree({ 1, 2, -1, -1, 3 });
+			int result = longestZigZag(head);
+			Assert::AreEqual(2, result, L"Result was different.");
+			deleteBinaryTree(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_LongestZigZag3)
+		{
+			TreeNode* head = createBinaryTree({ 1 });
+			int result = longestZigZag(head);
+			Assert::AreEqual(0, result, L"Result was different.");
+			deleteBinaryTree(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_Lca1)
+		{
+			TreeNode* head = createBinaryTree({ 3,5,1,6,2,0,8,-1,-1,7,4 });
+			TreeNode* p = findNode(head, 5);
+			TreeNode* q = findNode(head, 1);
+			TreeNode* result = lowestCommonAncestor(head, p, q);
+			Assert::AreEqual(3, result->val, L"Result was different.");
+			deleteBinaryTree(head);
+		}
 	};
 }
