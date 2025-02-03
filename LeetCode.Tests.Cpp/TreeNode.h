@@ -19,6 +19,7 @@ std::vector<int> collectLeafNodes(TreeNode* head, std::vector<int>& endLeaves);
 int countPaths(TreeNode* head, long targetSum);
 int drawZigZag(TreeNode* root, bool toLeft);
 TreeNode* findNode(TreeNode* root, int target);
+std::queue<TreeNode*> getBelowLevelNodes(std::queue<TreeNode*> &currentLevel);
 
 
 // Actual Methods
@@ -39,5 +40,11 @@ int longestZigZag(TreeNode* root, int bypassPolicy = 0);
 
 // https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree
 TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q);
+
+// https://leetcode.com/problems/binary-tree-right-side-view
+std::vector<int> rightSideView(TreeNode* root);
+
+// https://leetcode.com/problems/maximum-level-sum-of-a-binary-tree
+int maxLevelSum(TreeNode* root);
 
 #endif // TREENODE_H

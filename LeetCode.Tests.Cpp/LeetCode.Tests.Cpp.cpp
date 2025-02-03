@@ -207,5 +207,41 @@ namespace LeetCodeTestsCpp
 			Assert::AreEqual(3, result->val, L"Result was different.");
 			deleteBinaryTree(head);
 		}
+
+		TEST_METHOD(Test_TreeNode_RightSideView)
+		{
+			TreeNode* head = createBinaryTree({ 1,2,3,-1,5,-1,4 });
+			std::vector<int> result = rightSideView(head);
+			std::vector<int> expected = { 1, 3, 4 };
+			Assert::IsTrue(result.size() == expected.size(), L"Size mismatch");
+			for (size_t i = 0; i < result.size(); ++i) {
+				Assert::AreEqual(expected[i], result[i], L"Element mismatch");
+			}
+			deleteBinaryTree(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_MaxLevelSum)
+		{
+			TreeNode* head = createBinaryTree({ 1,7,0,7,-8,-1,-1 });
+			int result = maxLevelSum(head);
+			Assert::AreEqual(2, result, L"Result was different.");
+			deleteBinaryTree(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_MaxLevelSum2)
+		{
+			TreeNode* head = createBinaryTree({ 989,-1,10250,98693,-89388,-1,-1,-1,-32127 });
+			int result = maxLevelSum(head);
+			Assert::AreEqual(2, result, L"Result was different.");
+			deleteBinaryTree(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_MaxLevelSum3)
+		{
+			TreeNode* head = createBinaryTree({ -100,-200,-300,-20,-5,-10,-1 });
+			int result = maxLevelSum(head);
+			Assert::AreEqual(3, result, L"Result was different.");
+			deleteBinaryTree(head);
+		}
 	};
 }

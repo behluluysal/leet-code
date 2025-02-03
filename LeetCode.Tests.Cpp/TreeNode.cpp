@@ -129,6 +129,52 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
 	return leftLCA ? leftLCA : rightLCA;
 }
 
+std::vector<int> rightSideView(TreeNode* root) {
+	std::vector<int>result;
+	if (!root) return result;
+
+	std::queue<TreeNode*>currentLevel;
+	currentLevel.push(root);
+	while (currentLevel.size() != 0) {
+		result.push_back(currentLevel.back()->val);
+		size_t size = currentLevel.size();
+		for (size_t i = 0; i < size; i++) {
+			TreeNode* node = currentLevel.front();
+			currentLevel.pop();
+			if (node->left) currentLevel.push(node->left);
+			if (node->right) currentLevel.push(node->right);
+		}
+	}
+	return result;
+}
+
+int maxLevelSum(TreeNode* root) {
+	if (!root) return 0;
+
+	std::queue<TreeNode*>currentLevel;
+	currentLevel.push(root);
+	int result = -100000;
+	int resultLevel = 0;
+	int level = 0;
+
+	while (currentLevel.size() != 0) {
+		size_t size = currentLevel.size();
+		int sum = 0;
+		level++;
+		for (size_t i = 0; i < size; i++) {
+			TreeNode* node = currentLevel.front();
+			currentLevel.pop();
+			sum += node->val;
+			if (node->left) currentLevel.push(node->left);
+			if (node->right) currentLevel.push(node->right);
+		}
+		if (sum > result) {
+			resultLevel = level;
+			result = sum;
+		}
+	}
+	return resultLevel;
+}
 
 // Helper methods
 std::vector<int> collectLeafNodes(TreeNode* head, std::vector<int>& endLeaves) {
@@ -174,4 +220,15 @@ TreeNode* findNode(TreeNode* root, int target) {
 	if (leftResult) return leftResult;
 
 	return findNode(root->right, target);
+}
+
+std::queue<TreeNode*> getBelowLevelNodes(std::queue<TreeNode*> &currentLevel) {
+	size_t size = currentLevel.size();
+	for (size_t i = 0; i < size; i++) {
+		TreeNode* node = currentLevel.front();
+		currentLevel.pop();
+		if(node->left) currentLevel.push(node->left);
+		if(node->right) currentLevel.push(node->right);
+	}
+	return currentLevel;
 }
