@@ -176,6 +176,39 @@ int maxLevelSum(TreeNode* root) {
 	return resultLevel;
 }
 
+TreeNode* searchBST(TreeNode* root, int val) {
+	return findNode(root, val);
+}
+
+TreeNode* deleteNode(TreeNode* root, int key) {
+	if (!root) return nullptr;
+
+	if (root->val == key) {
+		TreeNode* nodeToDelete = root;
+		if (!root->right) {
+			root = root->left;  // Promote left child
+			nodeToDelete = nullptr;
+			delete nodeToDelete;
+		}
+		else {
+			TreeNode* rightChild = root->right;
+			TreeNode* leftmost = rightChild;
+			while (leftmost->left) {
+				leftmost = leftmost->left;
+			}
+			leftmost->left = root->left;
+			root = rightChild;
+			nodeToDelete = nullptr;
+			delete nodeToDelete;
+		}
+		return root;
+	}
+	root->left = deleteNode(root->left, key);
+	root->right = deleteNode(root->right, key);
+
+	return root;
+}
+
 // Helper methods
 std::vector<int> collectLeafNodes(TreeNode* head, std::vector<int>& endLeaves) {
 	if (!head) return endLeaves;

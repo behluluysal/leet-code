@@ -243,5 +243,43 @@ namespace LeetCodeTestsCpp
 			Assert::AreEqual(3, result, L"Result was different.");
 			deleteBinaryTree(head);
 		}
+
+		TEST_METHOD(Test_TreeNode_SearchBst)
+		{
+			TreeNode* head = createBinaryTree({ 4,2,7,1,3 });
+			TreeNode* result = searchBST(head, 2);
+			Assert::AreEqual(2, result->val, L"Result was different.");
+			deleteBinaryTree(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_DeleteNode)
+		{
+			TreeNode* head = createBinaryTree({ 5,3,6,2,4,-1,7 });
+			TreeNode* result = deleteNode(head, 3);
+			std::vector<int> expected = { 5, 4, 6, 2, 7 };
+			std::vector<int> output = binaryTreeToVector(result);
+			output.erase(std::remove(output.begin(), output.end(), -1), output.end());
+
+			Assert::IsTrue(output.size() == expected.size(), L"Size mismatch");
+			for (size_t i = 0; i < output.size(); ++i) {
+				Assert::AreEqual(output[i], expected[i], L"Element mismatch");
+			}
+			deleteBinaryTree(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_DeleteNode2)
+		{
+			TreeNode* head = createBinaryTree({ 0 });
+			TreeNode* result = deleteNode(head, 0);
+			std::vector<int> expected = {  };
+			std::vector<int> output = binaryTreeToVector(result);
+			output.erase(std::remove(output.begin(), output.end(), -1), output.end());
+
+			Assert::IsTrue(output.size() == expected.size(), L"Size mismatch");
+			for (size_t i = 0; i < output.size(); ++i) {
+				Assert::AreEqual(output[i], expected[i], L"Element mismatch");
+			}
+			deleteBinaryTree(head);
+		}
 	};
 }

@@ -47,4 +47,10 @@ std::vector<int> rightSideView(TreeNode* root);
 // https://leetcode.com/problems/maximum-level-sum-of-a-binary-tree
 int maxLevelSum(TreeNode* root);
 
+// https://leetcode.com/problems/search-in-a-binary-search-tree
+TreeNode* searchBST(TreeNode* root, int val);
+
+// https://leetcode.com/problems/delete-node-in-a-bst/description
+TreeNode* deleteNode(TreeNode* root, int key);
+
 #endif // TREENODE_H
