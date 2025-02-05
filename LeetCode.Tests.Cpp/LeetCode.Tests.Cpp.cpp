@@ -2,6 +2,7 @@
 #include "CppUnitTest.h"
 #include "ListNode.h"
 #include "TreeNode.h"
+#include "Questions.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -280,6 +281,16 @@ namespace LeetCodeTestsCpp
 				Assert::AreEqual(output[i], expected[i], L"Element mismatch");
 			}
 			deleteBinaryTree(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_CanVisitAllRooms)
+		{
+			std::vector<std::vector<int>> rooms = { {1}, {2}, {3}, {} };
+			bool expected = true;
+
+			bool result = canVisitAllRooms(rooms);
+
+			Assert::AreEqual(expected, result);
 		}
 	};
 }
