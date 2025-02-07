@@ -2,6 +2,9 @@
 
 namespace LeetCode.Tests;
 
+/// <summary>
+/// The questions in this class are from leetcode-75
+/// </summary>
 public static class Questions
 {
     #region [ Array / String ]
