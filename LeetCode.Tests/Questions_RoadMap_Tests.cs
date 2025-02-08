@@ -40,4 +40,23 @@ public class Questions_RoadMap_Tests
         List<List<string>> output = Questions_RoadMap.GroupAnagrams(strs);
         Assert.Equal(expectedOutput, output);
     }
+
+    [Theory]
+    [InlineData(new int[] { 1, 1, 1, 2, 2, 3 }, 2, new int[] { 1, 2 })]
+    [InlineData(new int[] { 1 }, 1, new int[] { 1 })]
+    [InlineData(new int[] { 1, 2 }, 2, new int[] { 1, 2 })]
+    public void TopKFrequent(int[] nums, int k, int[] expectedOutput)
+    {
+        int[] output = Questions_RoadMap.TopKFrequent(nums, k);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Fact]
+    public void EncodeDecodeString()
+    {
+        string[] strs = ["neet", "code", "love", "you"];
+        string output = Questions_RoadMap.Encode(strs);
+        List<string> result = Questions_RoadMap.Decode(output);
+        Assert.Equal(strs, result);
+    }
 }
