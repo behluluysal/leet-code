@@ -131,6 +131,7 @@ public static class Questions_RoadMap
         return result.Take(k).ToArray();
     }
 
+    // https://neetcode.io/problems/string-encode-and-decode
     public static string Encode(IList<string> strs)
     {
         StringBuilder builder = new();
@@ -158,6 +159,95 @@ public static class Questions_RoadMap
             index += lenght;
         }
         return result;
+    }
+
+    // https://leetcode.com/problems/longest-consecutive-sequence
+    public static int LongestConsecutive(int[] nums)
+    {
+        if (nums.Length == 0) return 0;
+        HashSet<int> set = [.. nums];
+        int max = 0;
+        foreach (int element in set)
+        {
+            if (set.Contains(element - 1))
+                continue;
+            int counter = 1;
+            int nextNumber = element + 1;
+            while (set.Contains(nextNumber))
+            {
+                counter++;
+                nextNumber++;
+            }
+            if (counter > max)
+                max = counter;
+        }
+        return max;
+    }
+
+    // https://leetcode.com/problems/valid-sudoku
+    public static bool IsValidSudoku(char[][] board)
+    {
+        Dictionary<int, HashSet<char>> rows = [];
+        Dictionary<int, HashSet<char>> columns = [];
+        Dictionary<int, HashSet<char>> subMatricies = [];
+        int row = 0;
+        int column = 0;
+        int subMatrix = 0;
+
+        char[] flattenedBoard = new char[81];
+        for (int i = 0; i < 9; i++)
+            for (int j = 0; j < 9; j++)
+                flattenedBoard[i * 9 + j] = board[i][j];
+
+        for (int index = 0; index < 81; index++)
+        {
+            if (index % 9 == 0 && index != 0)
+            {
+                row++;
+                column = 0;
+                if(row % 3 != 0)
+                    subMatrix -= 3;
+            }
+            if (index % 3 == 0 && index != 0)
+            {
+                subMatrix++;
+            }
+            column++;
+            char currentValue = flattenedBoard[index];
+
+            if (currentValue == '.')
+                continue;
+
+            if (rows.TryGetValue(row, out var rowList))
+            {
+                if (rowList.Contains(currentValue))
+                    return false;
+                rowList.Add(currentValue);
+            }
+            else
+                rows.Add(row, [currentValue]);
+
+            if (columns.TryGetValue(column, out var columnList))
+            {
+                if (columnList.Contains(currentValue))
+                    return false;
+                columnList.Add(currentValue);
+            }
+            else
+                columns.Add(column, [currentValue]);
+
+            if (subMatricies.TryGetValue(subMatrix, out var subMatrixList))
+            {
+                if (subMatrixList.Contains(currentValue))
+                    return false;
+                subMatrixList.Add(currentValue);
+            }
+            else
+                subMatricies.Add(subMatrix, [currentValue]);
+
+        }
+
+        return true;
     }
 
     #endregion

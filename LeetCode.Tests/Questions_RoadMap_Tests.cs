@@ -59,4 +59,22 @@ public class Questions_RoadMap_Tests
         List<string> result = Questions_RoadMap.Decode(output);
         Assert.Equal(strs, result);
     }
+
+    [Theory]
+    [InlineData(new int[] { 100, 4, 200, 1, 3, 2 }, 4)]
+    [InlineData(new int[] { 0, 3, 7, 2, 5, 8, 4, 6, 0, 1 }, 9)]
+    [InlineData(new int[] {  }, 0)]
+    public void LongestConsecutive(int[] nums, int expectedOutput)
+    {
+        int output = Questions_RoadMap.LongestConsecutive(nums);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [ClassData(typeof(IsValidSudokuTestData))]
+    public void IsValidSudoku(char[][] board, bool expectedOutput)
+    {
+        bool output = Questions_RoadMap.IsValidSudoku(board);
+        Assert.Equal(expectedOutput, output);
+    }
 }
