@@ -77,4 +77,29 @@ public class Questions_RoadMap_Tests
         bool output = Questions_RoadMap.IsValidSudoku(board);
         Assert.Equal(expectedOutput, output);
     }
+
+    [Theory]
+    [InlineData("()", true)]
+    [InlineData("()[]{}", true)]
+    [InlineData("(]", false)]
+    [InlineData("([])", true)]
+    public void IsValidParantheses(string s, bool expectedOutput)
+    {
+        bool output = Questions_RoadMap.IsValidParantheses(s);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Fact]
+    public void MinStack()
+    {
+        MinStack obj = new();
+        obj.Push(-2);
+        obj.Push(1);
+        obj.Push(-3);
+        int val = obj.GetMin();
+        Assert.Equal(-3, val);
+        obj.Pop();
+        val = obj.GetMin();
+        Assert.Equal(-2, val);
+    }
 }

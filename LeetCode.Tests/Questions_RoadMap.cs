@@ -251,4 +251,35 @@ public static class Questions_RoadMap
     }
 
     #endregion
+
+    #region [ Stack ]
+
+    // https://leetcode.com/problems/valid-parentheses
+    public static bool IsValidParantheses(string s)
+    {
+
+        Stack<char> stack = [];
+        Dictionary<char, char> map = new()
+        {
+            { ')' ,'(' },
+            { '}' ,'{' },
+            { ']' ,'[' }
+        };
+
+        foreach (char element in s)
+        {
+            if(map.ContainsKey(element))
+            {
+                if(stack.TryPeek(out char value) && value == map[element])
+                    stack.Pop();
+                else
+                    return false;
+            }
+            else
+                stack.Push(element);
+        }
+        return stack.Count == 0;
+    }
+
+    #endregion
 }
