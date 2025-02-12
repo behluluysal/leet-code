@@ -63,7 +63,7 @@ public class Questions_RoadMap_Tests
     [Theory]
     [InlineData(new int[] { 100, 4, 200, 1, 3, 2 }, 4)]
     [InlineData(new int[] { 0, 3, 7, 2, 5, 8, 4, 6, 0, 1 }, 9)]
-    [InlineData(new int[] {  }, 0)]
+    [InlineData(new int[] { }, 0)]
     public void LongestConsecutive(int[] nums, int expectedOutput)
     {
         int output = Questions_RoadMap.LongestConsecutive(nums);
@@ -101,5 +101,24 @@ public class Questions_RoadMap_Tests
         obj.Pop();
         val = obj.GetMin();
         Assert.Equal(-2, val);
+    }
+
+    [Theory]
+    [InlineData(new string[] { "2", "1", "+", "3", "*" }, 9)]
+    [InlineData(new string[] { "4", "13", "5", "/", "+" }, 6)]
+    [InlineData(new string[] { "10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+" }, 22)]
+    public void EvalRPN(string[] tokens, int expectedOutput)
+    {
+        int output = Questions_RoadMap.EvalRPN(tokens);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { 30, 40, 50, 60 }, new int[] { 1, 1, 1, 0 })]
+    [InlineData(new int[] { 73, 74, 75, 71, 69, 72, 76, 73 }, new int[] { 1, 1, 4, 2, 1, 1, 0, 0 })]
+    public void DailyTemperatures(int[] temperatures, int[] expectedOutput)
+    {
+        int[] output = Questions_RoadMap.DailyTemperatures(temperatures);
+        Assert.Equal(expectedOutput, output);
     }
 }

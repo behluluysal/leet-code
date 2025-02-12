@@ -205,7 +205,7 @@ public static class Questions_RoadMap
             {
                 row++;
                 column = 0;
-                if(row % 3 != 0)
+                if (row % 3 != 0)
                     subMatrix -= 3;
             }
             if (index % 3 == 0 && index != 0)
@@ -268,9 +268,9 @@ public static class Questions_RoadMap
 
         foreach (char element in s)
         {
-            if(map.ContainsKey(element))
+            if (map.ContainsKey(element))
             {
-                if(stack.TryPeek(out char value) && value == map[element])
+                if (stack.TryPeek(out char value) && value == map[element])
                     stack.Pop();
                 else
                     return false;
@@ -279,6 +279,59 @@ public static class Questions_RoadMap
                 stack.Push(element);
         }
         return stack.Count == 0;
+    }
+
+    // https://leetcode.com/problems/evaluate-reverse-polish-notation
+    public static int EvalRPN(string[] tokens)
+    {
+        Stack<int> stack = [];
+        foreach (string token in tokens)
+        {
+            if (int.TryParse(token, out int currentVal))
+            {
+                stack.Push(currentVal);
+                continue;
+            }
+            int val2 = stack.Pop();
+            int val1 = stack.Pop();
+
+            if (token == "+")
+            {
+                stack.Push(val1 + val2);
+            }
+            else if (token == "-")
+            {
+                stack.Push(val1 - val2);
+            }
+            else if (token == "*")
+            {
+                stack.Push(val1 * val2);
+            }
+            else if (token == "/")
+            {
+                stack.Push(val1 / val2);
+            }
+        }
+        return stack.Pop();
+    }
+
+    // https://leetcode.com/problems/daily-temperatures
+    public static int[] DailyTemperatures(int[] temperatures)
+    {
+        int[] result = new int[temperatures.Length];
+        int index = 0;
+        Stack<(int index, int temp)> stack = [];
+        foreach (int temperature in temperatures)
+        {
+            while(stack.Count > 0 && temperature > stack.Peek().temp)
+            {
+                var tuple = stack.Pop();
+                result[tuple.index] = index - tuple.index;
+            }
+            stack.Push((index, temperature));
+            index++;
+        }
+        return result;
     }
 
     #endregion
