@@ -334,5 +334,66 @@ public static class Questions_RoadMap
         return result;
     }
 
+    // https://leetcode.com/problems/generate-parentheses/
+    public static IList<string> GenerateParenthesis(int n)
+    {
+        List<string> result = [];
+        GenerateParenthesisHelper(result, new StringBuilder(), 0, 0, n);
+        return result;
+    }
+
+    // https://leetcode.com/problems/car-fleet
+    public static int CarFleet(int target, int[] position, int[] speed)
+    {
+        List<(int position, int speed)> fleet = [];
+        for (int i = 0; i < position.Length; i++)
+        {
+            fleet.Add((position[i], speed[i]));
+        }
+
+        fleet.Sort((a, b) => b.position.CompareTo(a.position));
+
+        Stack<double> stack = [];
+        foreach (var car in fleet)
+        {
+            double time = (double)(target - car.position) / car.speed;
+            stack.Push(time);
+            if (stack.Count >= 2 && stack.Peek() <= stack.ElementAt(1))
+            {
+                stack.Pop();
+            }
+        }
+
+        return stack.Count;
+    }
+
+    #endregion
+
+
+    #region [ Helpers ]
+
+    private static void GenerateParenthesisHelper(List<string> result, StringBuilder current, int open, int close, int max)
+    {
+        if (current.Length == max * 2)
+        {
+            result.Add(current.ToString());
+            return;
+        }
+
+        if (open < max)
+        {
+            current.Append('(');
+            GenerateParenthesisHelper(result, current, open + 1, close, max);
+            current.Remove(current.Length - 1, 1);
+        }
+
+        if (close < open)
+        {
+            current.Append(')');
+            GenerateParenthesisHelper(result, current, open, close + 1, max);
+            current.Remove(current.Length - 1, 1);
+        }
+    }
+
     #endregion
 }

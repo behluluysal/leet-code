@@ -121,4 +121,20 @@ public class Questions_RoadMap_Tests
         int[] output = Questions_RoadMap.DailyTemperatures(temperatures);
         Assert.Equal(expectedOutput, output);
     }
+
+    [Theory]
+    [InlineData(3, new string[] { "((()))", "(()())", "(())()", "()(())", "()()()" })]
+    public void GenerateParenthesis(int n, IList<string> expectedOutput)
+    {
+        IList<string> output = Questions_RoadMap.GenerateParenthesis(n);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(12, new int[] { 10, 8, 0, 5, 3 }, new int[] { 2, 4, 1, 1, 3 }, 3)]
+    public void CarFleet(int target, int[] position, int[] speed, int expectedOutput)
+    {
+        int output = Questions_RoadMap.CarFleet(target, position, speed);
+        Assert.Equal(expectedOutput, output);
+    }
 }
