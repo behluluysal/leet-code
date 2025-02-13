@@ -351,7 +351,7 @@ public static class Questions_RoadMap
             fleet.Add((position[i], speed[i]));
         }
 
-        fleet.Sort((a, b) => b.position.CompareTo(a.position));
+        fleet = [.. fleet.OrderByDescending(car => car.position)];
 
         Stack<double> stack = [];
         foreach (var car in fleet)
