@@ -367,6 +367,36 @@ public static class Questions_RoadMap
         return stack.Count;
     }
 
+    // https://leetcode.com/problems/largest-rectangle-in-histogram/
+    public static int LargestRectangleArea(int[] heights)
+    {
+        Stack<(int index, int height)> stack = [];
+        int maxArea = 0;
+        int index = 0;
+        foreach (int height in heights)
+        {
+            // On every pop, that means current element can be draw a rectangle backwards.
+            // To supply the width of that operation, use a temp index.
+            int tempIndex = index;
+            while(stack.Count > 0 && height < stack.Peek().height)
+            {
+                (int itemIndex, int itemHeight) = stack.Pop();
+                int newArea = itemHeight * (index - itemIndex);
+                maxArea = newArea > maxArea ? newArea : maxArea;
+                tempIndex = itemIndex;
+            }
+            stack.Push((tempIndex, height));
+            index++;
+        }
+
+        foreach((int itemIndex, int itemHeight) in stack)
+        {
+            int newArea = itemHeight * (index - itemIndex);
+            maxArea = newArea > maxArea ? newArea : maxArea;
+        }
+        return maxArea;
+    }
+
     #endregion
 
 

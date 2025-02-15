@@ -137,4 +137,14 @@ public class Questions_RoadMap_Tests
         int output = Questions_RoadMap.CarFleet(target, position, speed);
         Assert.Equal(expectedOutput, output);
     }
+
+    [Theory]
+    [InlineData(new int[] { 2, 1, 5, 6, 2, 3 }, 10)]
+    [InlineData(new int[] { 2, 4 }, 4)]
+    [InlineData(new int[] { 3, 6, 5, 7, 4, 8, 1, 0 }, 20)]
+    public void LargestRectangleArea(int[] target, int expectedOutput)
+    {
+        int output = Questions_RoadMap.LargestRectangleArea(target);
+        Assert.Equal(expectedOutput, output);
+    }
 }
