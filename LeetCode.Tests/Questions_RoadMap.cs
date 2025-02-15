@@ -205,7 +205,7 @@ public static class Questions_RoadMap
             {
                 row++;
                 column = 0;
-                if(row % 3 != 0)
+                if (row % 3 != 0)
                     subMatrix -= 3;
             }
             if (index % 3 == 0 && index != 0)
@@ -248,6 +248,181 @@ public static class Questions_RoadMap
         }
 
         return true;
+    }
+
+    #endregion
+
+    #region [ Stack ]
+
+    // https://leetcode.com/problems/valid-parentheses
+    public static bool IsValidParantheses(string s)
+    {
+
+        Stack<char> stack = [];
+        Dictionary<char, char> map = new()
+        {
+            { ')' ,'(' },
+            { '}' ,'{' },
+            { ']' ,'[' }
+        };
+
+        foreach (char element in s)
+        {
+            if (map.ContainsKey(element))
+            {
+                if (stack.TryPeek(out char value) && value == map[element])
+                    stack.Pop();
+                else
+                    return false;
+            }
+            else
+                stack.Push(element);
+        }
+        return stack.Count == 0;
+    }
+
+    // https://leetcode.com/problems/evaluate-reverse-polish-notation
+    public static int EvalRPN(string[] tokens)
+    {
+        Stack<int> stack = [];
+        foreach (string token in tokens)
+        {
+            if (int.TryParse(token, out int currentVal))
+            {
+                stack.Push(currentVal);
+                continue;
+            }
+            int val2 = stack.Pop();
+            int val1 = stack.Pop();
+
+            if (token == "+")
+            {
+                stack.Push(val1 + val2);
+            }
+            else if (token == "-")
+            {
+                stack.Push(val1 - val2);
+            }
+            else if (token == "*")
+            {
+                stack.Push(val1 * val2);
+            }
+            else if (token == "/")
+            {
+                stack.Push(val1 / val2);
+            }
+        }
+        return stack.Pop();
+    }
+
+    // https://leetcode.com/problems/daily-temperatures
+    public static int[] DailyTemperatures(int[] temperatures)
+    {
+        int[] result = new int[temperatures.Length];
+        int index = 0;
+        Stack<(int index, int temp)> stack = [];
+        foreach (int temperature in temperatures)
+        {
+            while(stack.Count > 0 && temperature > stack.Peek().temp)
+            {
+                var tuple = stack.Pop();
+                result[tuple.index] = index - tuple.index;
+            }
+            stack.Push((index, temperature));
+            index++;
+        }
+        return result;
+    }
+
+    // https://leetcode.com/problems/generate-parentheses/
+    public static IList<string> GenerateParenthesis(int n)
+    {
+        List<string> result = [];
+        GenerateParenthesisHelper(result, new StringBuilder(), 0, 0, n);
+        return result;
+    }
+
+    // https://leetcode.com/problems/car-fleet
+    public static int CarFleet(int target, int[] position, int[] speed)
+    {
+        List<(int position, int speed)> fleet = [];
+        for (int i = 0; i < position.Length; i++)
+        {
+            fleet.Add((position[i], speed[i]));
+        }
+
+        fleet = [.. fleet.OrderByDescending(car => car.position)];
+
+        Stack<double> stack = [];
+        foreach (var car in fleet)
+        {
+            double time = (double)(target - car.position) / car.speed;
+            stack.Push(time);
+            if (stack.Count >= 2 && stack.Peek() <= stack.ElementAt(1))
+            {
+                stack.Pop();
+            }
+        }
+
+        return stack.Count;
+    }
+
+    // https://leetcode.com/problems/largest-rectangle-in-histogram/
+    public static int LargestRectangleArea(int[] heights)
+    {
+        Stack<(int index, int height)> stack = [];
+        int maxArea = 0;
+        int index = 0;
+        foreach (int height in heights)
+        {
+            // On every pop, that means current element can be draw a rectangle backwards.
+            // To supply the width of that operation, use a temp index.
+            int tempIndex = index;
+            while(stack.Count > 0 && height < stack.Peek().height)
+            {
+                (int itemIndex, int itemHeight) = stack.Pop();
+                int newArea = itemHeight * (index - itemIndex);
+                maxArea = newArea > maxArea ? newArea : maxArea;
+                tempIndex = itemIndex;
+            }
+            stack.Push((tempIndex, height));
+            index++;
+        }
+
+        foreach((int itemIndex, int itemHeight) in stack)
+        {
+            int newArea = itemHeight * (index - itemIndex);
+            maxArea = newArea > maxArea ? newArea : maxArea;
+        }
+        return maxArea;
+    }
+
+    #endregion
+
+
+    #region [ Helpers ]
+
+    private static void GenerateParenthesisHelper(List<string> result, StringBuilder current, int open, int close, int max)
+    {
+        if (current.Length == max * 2)
+        {
+            result.Add(current.ToString());
+            return;
+        }
+
+        if (open < max)
+        {
+            current.Append('(');
+            GenerateParenthesisHelper(result, current, open + 1, close, max);
+            current.Remove(current.Length - 1, 1);
+        }
+
+        if (close < open)
+        {
+            current.Append(')');
+            GenerateParenthesisHelper(result, current, open, close + 1, max);
+            current.Remove(current.Length - 1, 1);
+        }
     }
 
     #endregion
