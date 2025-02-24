@@ -147,4 +147,25 @@ public class Questions_RoadMap_Tests
         int output = Questions_RoadMap.LargestRectangleArea(target);
         Assert.Equal(expectedOutput, output);
     }
+
+    [Theory]
+    [InlineData("A man, a plan, a canal: Panama", true)]
+    [InlineData("..A man, a plan, a canal: Panama...........", true)]
+    [InlineData("race a car", false)]
+    [InlineData(" ", true)]
+    public void IsPalindrome(string s, bool expectedOutput)
+    {
+        bool output = Questions_RoadMap.IsPalindrome(s);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { 2, 7, 11, 15 }, 9, new int[] { 1, 2 })]
+    [InlineData(new int[] { 2, 3, 4 }, 6, new int[] { 1, 3 })]
+    [InlineData(new int[] { -1, 0 }, -1, new int[] { 1, 2 })]
+    public void TwoSumII(int[] numbers, int target, int[] expectedOutput)
+    {
+        int[] output = Questions_RoadMap.TwoSumII(numbers, target);
+        Assert.Equal(expectedOutput, output);
+    }
 }

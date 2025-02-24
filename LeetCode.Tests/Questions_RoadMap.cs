@@ -323,7 +323,7 @@ public static class Questions_RoadMap
         Stack<(int index, int temp)> stack = [];
         foreach (int temperature in temperatures)
         {
-            while(stack.Count > 0 && temperature > stack.Peek().temp)
+            while (stack.Count > 0 && temperature > stack.Peek().temp)
             {
                 var tuple = stack.Pop();
                 result[tuple.index] = index - tuple.index;
@@ -378,7 +378,7 @@ public static class Questions_RoadMap
             // On every pop, that means current element can be draw a rectangle backwards.
             // To supply the width of that operation, use a temp index.
             int tempIndex = index;
-            while(stack.Count > 0 && height < stack.Peek().height)
+            while (stack.Count > 0 && height < stack.Peek().height)
             {
                 (int itemIndex, int itemHeight) = stack.Pop();
                 int newArea = itemHeight * (index - itemIndex);
@@ -389,7 +389,7 @@ public static class Questions_RoadMap
             index++;
         }
 
-        foreach((int itemIndex, int itemHeight) in stack)
+        foreach ((int itemIndex, int itemHeight) in stack)
         {
             int newArea = itemHeight * (index - itemIndex);
             maxArea = newArea > maxArea ? newArea : maxArea;
@@ -399,6 +399,50 @@ public static class Questions_RoadMap
 
     #endregion
 
+    #region [ Two Pointer ]
+
+    // https://leetcode.com/problems/valid-palindrome
+    public static bool IsPalindrome(string s)
+    {
+        int head = 0, tail = s.Length - 1;
+        while (head < tail)
+        {
+            if (!IsAlphaNumeric(s[head]))
+            {
+                head++;
+                continue;
+            }
+            else if (!IsAlphaNumeric(s[tail]))
+            {
+                tail--;
+                continue;
+            }
+
+            if (char.ToLower(s[head]) != char.ToLower(s[tail]))
+                return false;
+            head++;
+            tail--;
+        }
+        return true;
+    }
+
+    // https://leetcode.com/problems/two-sum-ii-input-array-is-sorted
+    public static int[] TwoSumII(int[] numbers, int target)
+    {
+        int head = 0, tail = numbers.Length - 1;
+        while (head < tail)
+        {
+            if (numbers[head] + numbers[tail] == target)
+                return [head + 1, tail + 1];
+            if (numbers[head] + numbers[tail] < target)
+                head++;
+            else
+                tail--;
+        }
+        return [];
+    }
+
+    #endregion
 
     #region [ Helpers ]
 
@@ -423,6 +467,13 @@ public static class Questions_RoadMap
             GenerateParenthesisHelper(result, current, open, close + 1, max);
             current.Remove(current.Length - 1, 1);
         }
+    }
+
+    private static bool IsAlphaNumeric(char c)
+    {
+        return (c >= 'A' && c <= 'Z' ||
+                c >= 'a' && c <= 'z' ||
+                c >= '0' && c <= '9');
     }
 
     #endregion
