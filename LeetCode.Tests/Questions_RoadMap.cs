@@ -442,6 +442,57 @@ public static class Questions_RoadMap
         return [];
     }
 
+    // https://leetcode.com/problems/3sum
+    public static IList<IList<int>> ThreeSum(int[] nums)
+    {
+        IList<IList<int>> result = [];
+        Array.Sort(nums);
+        for (int i = 0; i < nums.Length; i++)
+        {
+            int target = 0 - nums[i];
+            int left = i + 1;
+            int right = nums.Length - 1;
+            while (left < right)
+            {
+
+                if (nums[left] + nums[right] == target)
+                {
+                    result.Add([nums[i], nums[left], nums[right]]);
+                    left++;
+                    right--;
+                    while (left < right && nums[left] == nums[left - 1])
+                    {
+                        left++;
+                    }
+                }
+                else if (nums[left] + nums[right] < target)
+                    left++;
+                else
+                    right--;
+            }
+        }
+        return result;
+    }
+
+    // https://leetcode.com/problems/container-with-most-water
+    public static int MaxArea(int[] height)
+    {
+        int max = 0;
+        int left = 0, right = height.Length - 1;
+        while (left < right)
+        {
+            int lowerHeight = Math.Min(height[left], height[right]);
+            int currentArea = lowerHeight * (right - left);
+            if (max < currentArea)
+                max = currentArea;
+            if (height[left] < height[right])
+                left++;
+            else
+                right--;
+        }
+        return max;
+    }
+
     #endregion
 
     #region [ Helpers ]

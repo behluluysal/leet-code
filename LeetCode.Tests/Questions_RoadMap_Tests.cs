@@ -168,4 +168,21 @@ public class Questions_RoadMap_Tests
         int[] output = Questions_RoadMap.TwoSumII(numbers, target);
         Assert.Equal(expectedOutput, output);
     }
+
+    [Theory]
+    [ClassData(typeof(ThreeSumTestData))]
+    public void ThreeSum(int[] numbers, int[][] expectedOutput)
+    {
+        IList<IList<int>> output = Questions_RoadMap.ThreeSum(numbers);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { 1, 8, 6, 2, 5, 4, 8, 3, 7 }, 49)]
+    [InlineData(new int[] { 1, 1 }, 1)]
+    public void MaxArea(int[] height, int expectedOutput)
+    {
+        int output = Questions_RoadMap.MaxArea(height);
+        Assert.Equal(expectedOutput, output);
+    }
 }
