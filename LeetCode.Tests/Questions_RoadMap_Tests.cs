@@ -185,4 +185,31 @@ public class Questions_RoadMap_Tests
         int output = Questions_RoadMap.MaxArea(height);
         Assert.Equal(expectedOutput, output);
     }
+
+    [Theory]
+    [InlineData(new int[] { 0, 2, 0, 3, 1, 0, 1, 3, 2, 1 }, 9)]
+    [InlineData(new int[] { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 }, 6)]
+    public void Trap(int[] height, int expectedOutput)
+    {
+        int output = Questions_RoadMap.Trap(height);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { 0, 2, 0, 3, 1, 0, 1, 3, 2, 1 }, 9)]
+    [InlineData(new int[] { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 }, 6)]
+    public void TrapII(int[] height, int expectedOutput)
+    {
+        int output = Questions_RoadMap.TrapII(height);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { 7, 1, 5, 3, 6, 4 }, 5)]
+    [InlineData(new int[] { 7, 6, 4, 3, 1 }, 0)]
+    public void MaxProfit(int[] height, int expectedOutput)
+    {
+        int output = Questions_RoadMap.MaxProfit(height);
+        Assert.Equal(expectedOutput, output);
+    }
 }

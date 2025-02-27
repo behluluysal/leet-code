@@ -493,6 +493,85 @@ public static class Questions_RoadMap
         return max;
     }
 
+    // https://leetcode.com/problems/trapping-rain-water/
+    // This solution is not using two pointer approach. Check TrapII for two pointer solution.
+    public static int Trap(int[] height)
+    {
+        int[] prefix = new int[height.Length];
+        int[] suffix = new int[height.Length];
+        int totalWater = 0;
+        int max = 0;
+        for (int i = 0; i < height.Length; i++)
+        {
+            prefix[i] = max;
+            if (max < height[i])
+                max = height[i];
+        }
+        max = 0;
+        for (int i = height.Length - 1; i > 0; i--)
+        {
+            suffix[i] = max;
+            if (max < height[i])
+                max = height[i];
+        }
+
+        for (int i = 0; i < height.Length; i++)
+        {
+            int min = Math.Min(prefix[i], suffix[i]);
+            int water = min - height[i];
+            totalWater += water > 0 ? water : 0;
+        }
+
+        return totalWater;
+    }
+    public static int TrapII(int[] height)
+    {
+        int totalWater = 0;
+        int left = 0;
+        int right = height.Length - 1;
+        int leftMax = height[0];
+        int rightMax = height[^1];
+
+        while (left < right)
+        {
+            if (leftMax < rightMax)
+            {
+                left++;
+                leftMax = Math.Max(leftMax, height[left]);
+                totalWater += (leftMax - height[left]);
+            }
+            else
+            {
+                right--;
+                rightMax = Math.Max(rightMax, height[right]);
+                totalWater += (rightMax - height[right]);
+            }
+        }
+        return totalWater;
+    }
+
+    #endregion
+
+    #region [ Sliding Window ]
+
+    // https://leetcode.com/problems/best-time-to-buy-and-sell-stock
+    public static int MaxProfit(int[] prices)
+    {
+        int sellPoint = 1, buyPrice = prices[0];
+        int maxProfit = 0;
+        for (; sellPoint < prices.Length; sellPoint++)
+        {
+            if (prices[sellPoint] < buyPrice)
+                buyPrice = prices[sellPoint];
+
+            int profit = prices[sellPoint] - buyPrice;
+
+            if (profit > maxProfit)
+                maxProfit = profit;
+        }
+        return maxProfit;
+    }
+
     #endregion
 
     #region [ Helpers ]
