@@ -323,7 +323,7 @@ public static class Questions_RoadMap
         Stack<(int index, int temp)> stack = [];
         foreach (int temperature in temperatures)
         {
-            while(stack.Count > 0 && temperature > stack.Peek().temp)
+            while (stack.Count > 0 && temperature > stack.Peek().temp)
             {
                 var tuple = stack.Pop();
                 result[tuple.index] = index - tuple.index;
@@ -378,7 +378,7 @@ public static class Questions_RoadMap
             // On every pop, that means current element can be draw a rectangle backwards.
             // To supply the width of that operation, use a temp index.
             int tempIndex = index;
-            while(stack.Count > 0 && height < stack.Peek().height)
+            while (stack.Count > 0 && height < stack.Peek().height)
             {
                 (int itemIndex, int itemHeight) = stack.Pop();
                 int newArea = itemHeight * (index - itemIndex);
@@ -389,7 +389,7 @@ public static class Questions_RoadMap
             index++;
         }
 
-        foreach((int itemIndex, int itemHeight) in stack)
+        foreach ((int itemIndex, int itemHeight) in stack)
         {
             int newArea = itemHeight * (index - itemIndex);
             maxArea = newArea > maxArea ? newArea : maxArea;
@@ -399,6 +399,230 @@ public static class Questions_RoadMap
 
     #endregion
 
+    #region [ Two Pointer ]
+
+    // https://leetcode.com/problems/valid-palindrome
+    public static bool IsPalindrome(string s)
+    {
+        int head = 0, tail = s.Length - 1;
+        while (head < tail)
+        {
+            if (!IsAlphaNumeric(s[head]))
+            {
+                head++;
+                continue;
+            }
+            else if (!IsAlphaNumeric(s[tail]))
+            {
+                tail--;
+                continue;
+            }
+
+            if (char.ToLower(s[head]) != char.ToLower(s[tail]))
+                return false;
+            head++;
+            tail--;
+        }
+        return true;
+    }
+
+    // https://leetcode.com/problems/two-sum-ii-input-array-is-sorted
+    public static int[] TwoSumII(int[] numbers, int target)
+    {
+        int head = 0, tail = numbers.Length - 1;
+        while (head < tail)
+        {
+            if (numbers[head] + numbers[tail] == target)
+                return [head + 1, tail + 1];
+            if (numbers[head] + numbers[tail] < target)
+                head++;
+            else
+                tail--;
+        }
+        return [];
+    }
+
+    // https://leetcode.com/problems/3sum
+    public static IList<IList<int>> ThreeSum(int[] nums)
+    {
+        IList<IList<int>> result = [];
+        Array.Sort(nums);
+        for (int i = 0; i < nums.Length; i++)
+        {
+            int target = 0 - nums[i];
+            int left = i + 1;
+            int right = nums.Length - 1;
+            while (left < right)
+            {
+
+                if (nums[left] + nums[right] == target)
+                {
+                    result.Add([nums[i], nums[left], nums[right]]);
+                    left++;
+                    right--;
+                    while (left < right && nums[left] == nums[left - 1])
+                    {
+                        left++;
+                    }
+                }
+                else if (nums[left] + nums[right] < target)
+                    left++;
+                else
+                    right--;
+            }
+        }
+        return result;
+    }
+
+    // https://leetcode.com/problems/container-with-most-water
+    public static int MaxArea(int[] height)
+    {
+        int max = 0;
+        int left = 0, right = height.Length - 1;
+        while (left < right)
+        {
+            int lowerHeight = Math.Min(height[left], height[right]);
+            int currentArea = lowerHeight * (right - left);
+            if (max < currentArea)
+                max = currentArea;
+            if (height[left] < height[right])
+                left++;
+            else
+                right--;
+        }
+        return max;
+    }
+
+    // https://leetcode.com/problems/trapping-rain-water/
+    // This solution is not using two pointer approach. Check TrapII for two pointer solution.
+    public static int Trap(int[] height)
+    {
+        int[] prefix = new int[height.Length];
+        int[] suffix = new int[height.Length];
+        int totalWater = 0;
+        int max = 0;
+        for (int i = 0; i < height.Length; i++)
+        {
+            prefix[i] = max;
+            if (max < height[i])
+                max = height[i];
+        }
+        max = 0;
+        for (int i = height.Length - 1; i > 0; i--)
+        {
+            suffix[i] = max;
+            if (max < height[i])
+                max = height[i];
+        }
+
+        for (int i = 0; i < height.Length; i++)
+        {
+            int min = Math.Min(prefix[i], suffix[i]);
+            int water = min - height[i];
+            totalWater += water > 0 ? water : 0;
+        }
+
+        return totalWater;
+    }
+    public static int TrapII(int[] height)
+    {
+        int totalWater = 0;
+        int left = 0;
+        int right = height.Length - 1;
+        int leftMax = height[0];
+        int rightMax = height[^1];
+
+        while (left < right)
+        {
+            if (leftMax < rightMax)
+            {
+                left++;
+                leftMax = Math.Max(leftMax, height[left]);
+                totalWater += (leftMax - height[left]);
+            }
+            else
+            {
+                right--;
+                rightMax = Math.Max(rightMax, height[right]);
+                totalWater += (rightMax - height[right]);
+            }
+        }
+        return totalWater;
+    }
+
+    #endregion
+
+    #region [ Sliding Window ]
+
+    // https://leetcode.com/problems/best-time-to-buy-and-sell-stock
+    public static int MaxProfit(int[] prices)
+    {
+        int sellPoint = 1, buyPrice = prices[0];
+        int maxProfit = 0;
+        for (; sellPoint < prices.Length; sellPoint++)
+        {
+            if (prices[sellPoint] < buyPrice)
+                buyPrice = prices[sellPoint];
+
+            int profit = prices[sellPoint] - buyPrice;
+
+            if (profit > maxProfit)
+                maxProfit = profit;
+        }
+        return maxProfit;
+    }
+
+    // https://leetcode.com/problems/longest-substring-without-repeating-characters
+    public static int LengthOfLongestSubstring(string s)
+    {
+        HashSet<char> window = [];
+        int left = 0, right = 0;
+        int max = 0;
+        while (right < s.Length)
+        {
+            if (!window.Contains(s[right]))
+            {
+                window.Add(s[right++]);
+            }
+            else
+            {
+                max = max < window.Count ? window.Count : max;
+                while (window.Contains(s[right]))
+                {
+                    window.Remove(s[left++]);
+                }
+            }
+        }
+        return max < window.Count ? window.Count : max;
+    }
+
+    // https://leetcode.com/problems/longest-repeating-character-replacement
+    public static int CharacterReplacement(string s, int k)
+    {
+        Dictionary<char, int> dictionary = [];
+        int max = 0, mostCharInDictionary = 0, left = 0;
+        for (int i = 0; i < s.Length; i++)
+        {
+            if (dictionary.TryGetValue(s[i], out int value))
+                dictionary[s[i]] = ++value;
+            else
+                dictionary.Add(s[i], 1);
+
+            mostCharInDictionary = Math.Max(mostCharInDictionary, dictionary[s[i]]);
+            int windowLength = i - left + 1;
+            while (windowLength - mostCharInDictionary > k)
+            {
+                dictionary[s[left]]--;
+                left++;
+                windowLength = i - left + 1;
+            }
+            max = Math.Max(max, windowLength);
+
+        }
+        return max;
+    }
+
+    #endregion
 
     #region [ Helpers ]
 
@@ -423,6 +647,13 @@ public static class Questions_RoadMap
             GenerateParenthesisHelper(result, current, open, close + 1, max);
             current.Remove(current.Length - 1, 1);
         }
+    }
+
+    private static bool IsAlphaNumeric(char c)
+    {
+        return (c >= 'A' && c <= 'Z' ||
+                c >= 'a' && c <= 'z' ||
+                c >= '0' && c <= '9');
     }
 
     #endregion

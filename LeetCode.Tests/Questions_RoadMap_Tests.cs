@@ -147,4 +147,89 @@ public class Questions_RoadMap_Tests
         int output = Questions_RoadMap.LargestRectangleArea(target);
         Assert.Equal(expectedOutput, output);
     }
+
+    [Theory]
+    [InlineData("A man, a plan, a canal: Panama", true)]
+    [InlineData("..A man, a plan, a canal: Panama...........", true)]
+    [InlineData("race a car", false)]
+    [InlineData(" ", true)]
+    public void IsPalindrome(string s, bool expectedOutput)
+    {
+        bool output = Questions_RoadMap.IsPalindrome(s);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { 2, 7, 11, 15 }, 9, new int[] { 1, 2 })]
+    [InlineData(new int[] { 2, 3, 4 }, 6, new int[] { 1, 3 })]
+    [InlineData(new int[] { -1, 0 }, -1, new int[] { 1, 2 })]
+    public void TwoSumII(int[] numbers, int target, int[] expectedOutput)
+    {
+        int[] output = Questions_RoadMap.TwoSumII(numbers, target);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [ClassData(typeof(ThreeSumTestData))]
+    public void ThreeSum(int[] numbers, int[][] expectedOutput)
+    {
+        IList<IList<int>> output = Questions_RoadMap.ThreeSum(numbers);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { 1, 8, 6, 2, 5, 4, 8, 3, 7 }, 49)]
+    [InlineData(new int[] { 1, 1 }, 1)]
+    public void MaxArea(int[] height, int expectedOutput)
+    {
+        int output = Questions_RoadMap.MaxArea(height);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { 0, 2, 0, 3, 1, 0, 1, 3, 2, 1 }, 9)]
+    [InlineData(new int[] { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 }, 6)]
+    public void Trap(int[] height, int expectedOutput)
+    {
+        int output = Questions_RoadMap.Trap(height);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { 0, 2, 0, 3, 1, 0, 1, 3, 2, 1 }, 9)]
+    [InlineData(new int[] { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 }, 6)]
+    public void TrapII(int[] height, int expectedOutput)
+    {
+        int output = Questions_RoadMap.TrapII(height);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { 7, 1, 5, 3, 6, 4 }, 5)]
+    [InlineData(new int[] { 7, 6, 4, 3, 1 }, 0)]
+    public void MaxProfit(int[] height, int expectedOutput)
+    {
+        int output = Questions_RoadMap.MaxProfit(height);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData("abcabcbb", 3)]
+    [InlineData("bbbbb", 1)]
+    [InlineData("pwwkew", 3)]
+    [InlineData(" ", 1)]
+    [InlineData("au", 2)]
+    public void LengthOfLongestSubstring(string s, int expectedOutput)
+    {
+        int output = Questions_RoadMap.LengthOfLongestSubstring(s);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData("AABABBBA", 1, 5)]
+    public void CharacterReplacement(string s, int k, int expectedOutput)
+    {
+        int output = Questions_RoadMap.CharacterReplacement(s, k);
+        Assert.Equal(expectedOutput, output);
+    }
 }
