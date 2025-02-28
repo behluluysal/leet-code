@@ -212,4 +212,24 @@ public class Questions_RoadMap_Tests
         int output = Questions_RoadMap.MaxProfit(height);
         Assert.Equal(expectedOutput, output);
     }
+
+    [Theory]
+    [InlineData("abcabcbb", 3)]
+    [InlineData("bbbbb", 1)]
+    [InlineData("pwwkew", 3)]
+    [InlineData(" ", 1)]
+    [InlineData("au", 2)]
+    public void LengthOfLongestSubstring(string s, int expectedOutput)
+    {
+        int output = Questions_RoadMap.LengthOfLongestSubstring(s);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData("AABABBBA", 1, 5)]
+    public void CharacterReplacement(string s, int k, int expectedOutput)
+    {
+        int output = Questions_RoadMap.CharacterReplacement(s, k);
+        Assert.Equal(expectedOutput, output);
+    }
 }

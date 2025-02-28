@@ -572,6 +572,56 @@ public static class Questions_RoadMap
         return maxProfit;
     }
 
+    // https://leetcode.com/problems/longest-substring-without-repeating-characters
+    public static int LengthOfLongestSubstring(string s)
+    {
+        HashSet<char> window = [];
+        int left = 0, right = 0;
+        int max = 0;
+        while (right < s.Length)
+        {
+            if (!window.Contains(s[right]))
+            {
+                window.Add(s[right++]);
+            }
+            else
+            {
+                max = max < window.Count ? window.Count : max;
+                while (window.Contains(s[right]))
+                {
+                    window.Remove(s[left++]);
+                }
+            }
+        }
+        return max < window.Count ? window.Count : max;
+    }
+
+    // https://leetcode.com/problems/longest-repeating-character-replacement
+    public static int CharacterReplacement(string s, int k)
+    {
+        Dictionary<char, int> dictionary = [];
+        int max = 0, mostCharInDictionary = 0, left = 0;
+        for (int i = 0; i < s.Length; i++)
+        {
+            if (dictionary.TryGetValue(s[i], out int value))
+                dictionary[s[i]] = ++value;
+            else
+                dictionary.Add(s[i], 1);
+
+            mostCharInDictionary = Math.Max(mostCharInDictionary, dictionary[s[i]]);
+            int windowLength = i - left + 1;
+            while (windowLength - mostCharInDictionary > k)
+            {
+                dictionary[s[left]]--;
+                left++;
+                windowLength = i - left + 1;
+            }
+            max = Math.Max(max, windowLength);
+
+        }
+        return max;
+    }
+
     #endregion
 
     #region [ Helpers ]
