@@ -449,6 +449,7 @@ public static class Questions_RoadMap
         Array.Sort(nums);
         for (int i = 0; i < nums.Length; i++)
         {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
             int target = 0 - nums[i];
             int left = i + 1;
             int right = nums.Length - 1;
@@ -620,6 +621,105 @@ public static class Questions_RoadMap
 
         }
         return max;
+    }
+
+    // https://leetcode.com/problems/permutation-in-string
+    public static bool CheckInclusion(string s1, string s2)
+    {
+        int[] s1Set = new int[26];
+        int left = -1, windowSize = 0;
+
+        for (int i = 0; i < s1.Length; i++)
+        {
+            s1Set[s1[i] - 'a']++;
+        }
+
+        for (int right = 0; right < s2.Length; right++)
+        {
+            if (s1Set[s2[right] - 'a'] == 0)
+            {
+                // shrink the window until we get space for the current element s2[right]
+                // if s2[right] is not desired (meaning not in s1) shrink the window completely
+                while (windowSize > 0 && s1Set[s2[right] - 'a'] == 0)
+                {
+                    windowSize--;
+                    s1Set[s2[left] - 'a']++;
+                    left++;
+                }
+
+                // after shrinking if we do not have space for s[right] it means we dont wanted this char at all
+                // window is deleted until we find a new desired char, set left to -1
+                // otherwise it means while shrinking the window we popped a char which is the same with s2[right]
+                // that means add that again to window (in else statement)
+                if (s1Set[s2[right] - 'a'] == 0)
+                    left = -1;
+                else
+                {
+                    s1Set[s2[right] - 'a']--;
+                    windowSize++;
+                }
+            }
+            else
+            {
+                s1Set[s2[right] - 'a']--;
+                windowSize++;
+                // if the sequence is just starting set the window start
+                if (left == -1)
+                    left = right;
+            }
+            if (windowSize == s1.Length)
+                return true;
+        }
+        return false;
+    }
+
+    // https://leetcode.com/problems/minimum-window-substring
+    public static string MinWindow(string s, string t)
+    {
+        Dictionary<char, int> tMap = [];
+        Queue<char> queue = [];
+        int min = 100001, start = 0, end = 0;
+
+        for (int i = 0; i < t.Length; i++)
+        {
+            if (tMap.TryGetValue(t[i], out int value))
+                tMap[t[i]] = ++value;
+            else
+                tMap.Add(t[i], 1);
+        }
+
+        int count = tMap.Count;
+
+        for (int right = 0; right < s.Length; right++)
+        {
+            char current = s[right];
+            queue.Enqueue(current);
+            if (tMap.TryGetValue(current, out int value))
+            {
+                tMap[current] = --value;
+                if (value == 0)
+                    count--;
+
+                while (count == 0)
+                {
+                    char topElement = queue.Peek();
+                    if (tMap.TryGetValue(topElement, out int value2))
+                    {
+                        if (queue.Count < min)
+                        {
+                            min = queue.Count;
+                            start = right - min + 1;
+                            end = right + 1;
+                        }
+                        tMap[topElement] = ++value2;
+                        count = value2 > 0 ? count + 1 : count;
+                    }
+                    queue.Dequeue();
+                }
+            }
+
+        }
+        return min == 100001 ? string.Empty : s[start..end];
     }
 
     #endregion

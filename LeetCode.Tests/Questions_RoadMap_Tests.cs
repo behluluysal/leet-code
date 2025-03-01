@@ -4,6 +4,8 @@ namespace LeetCode.Tests;
 
 public class Questions_RoadMap_Tests
 {
+    #region [ Array & Hashing ]
+
     [Theory]
     [InlineData(new int[] { 1, 2, 3, 1 }, true)]
     [InlineData(new int[] { 1, 2, 3, 4 }, false)]
@@ -78,6 +80,10 @@ public class Questions_RoadMap_Tests
         Assert.Equal(expectedOutput, output);
     }
 
+    #endregion
+
+    #region [ Stack ]
+
     [Theory]
     [InlineData("()", true)]
     [InlineData("()[]{}", true)]
@@ -148,6 +154,10 @@ public class Questions_RoadMap_Tests
         Assert.Equal(expectedOutput, output);
     }
 
+    #endregion
+
+    #region [ Two Pointer ]
+
     [Theory]
     [InlineData("A man, a plan, a canal: Panama", true)]
     [InlineData("..A man, a plan, a canal: Panama...........", true)]
@@ -204,6 +214,10 @@ public class Questions_RoadMap_Tests
         Assert.Equal(expectedOutput, output);
     }
 
+    #endregion
+
+    #region [ Sliding Window ]
+
     [Theory]
     [InlineData(new int[] { 7, 1, 5, 3, 6, 4 }, 5)]
     [InlineData(new int[] { 7, 6, 4, 3, 1 }, 0)]
@@ -232,4 +246,30 @@ public class Questions_RoadMap_Tests
         int output = Questions_RoadMap.CharacterReplacement(s, k);
         Assert.Equal(expectedOutput, output);
     }
+
+    [Theory]
+    [InlineData("ab", "eibdbaooo", true)]
+    [InlineData("ab", "eidbaooo", true)]
+    [InlineData("ab", "eidboaoo", false)]
+    [InlineData("abc", "lecabee", true)]
+    [InlineData("abc", "lecaabee", false)]
+    [InlineData("adc", "dcda", true)]
+    public void CheckInclusion(string s1, string s2, bool expectedOutput)
+    {
+        bool output = Questions_RoadMap.CheckInclusion(s1, s2);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData("DDADDBCA", "ABC", "BCA")]
+    [InlineData("ADOBECODEBANC", "ABC", "BANC")]
+    [InlineData("a", "a", "a")]
+    [InlineData("a", "aa", "")]
+    public void MinWindow(string s, string t, string expectedOutput)
+    {
+        string output = Questions_RoadMap.MinWindow(s, t);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    #endregion
 }
