@@ -722,6 +722,61 @@ public static class Questions_RoadMap
         return min == 100001 ? string.Empty : s[start..end];
     }
 
+    // https://leetcode.com/problems/sliding-window-maximum
+    public static int[] MaxSlidingWindow(int[] nums, int k)
+    {
+        PriorityQueue<(int value, int index), int> pq = new(Comparer<int>.Create((a, b) => b.CompareTo(a)));
+
+        int[] result = new int[nums.Length - k + 1];
+        int head = 0;
+
+        for (int i = 0; i < nums.Length; i++)
+        {
+            pq.Enqueue((nums[i], i), nums[i]);
+
+            if (i >= k - 1)
+            {
+                while (pq.Peek().index <= i - k)
+                {
+                    pq.Dequeue();
+                }
+                result[head++] = pq.Peek().value;
+            }
+        }
+
+        return result;
+    }
+
+    #endregion
+
+    #region [ Linked List ]
+
+    // https://leetcode.com/problems/merge-two-sorted-lists/
+    public static ListNode MergeTwoLists(ListNode list1, ListNode list2)
+    {
+        ListNode head = new(-101);
+        ListNode current = head;
+
+        while (list1 != null && list2 != null)
+        {
+            if (list1.val < list2.val)
+            {
+                current.next = list1;
+                list1 = list1.next;
+            }
+            else
+            {
+                current.next = list2;
+                list2 = list2.next;
+            }
+            current = current.next;
+        }
+
+        current.next = list1 ?? list2!;
+
+        return head.next;
+    }
+
     #endregion
 
     #region [ Helpers ]

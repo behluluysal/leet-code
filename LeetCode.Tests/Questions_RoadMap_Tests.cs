@@ -271,5 +271,34 @@ public class Questions_RoadMap_Tests
         Assert.Equal(expectedOutput, output);
     }
 
+    [Theory]
+    [InlineData(new int[] { 1, 3, -1, -3, 5, 3, 6, 7 }, 3, new int[] { 3, 3, 5, 5, 6, 7 })]
+    [InlineData(new int[] { 1, 2, 1, 0, 4, 2, 6 }, 3, new int[] { 2, 2, 4, 4, 6 })]
+    [InlineData(new int[] { 1 }, 1, new int[] { 1 })]
+    public void MaxSlidingWindow(int[] nums, int k, int[] expectedOutput)
+    {
+        int[] output = Questions_RoadMap.MaxSlidingWindow(nums, k);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    #endregion
+
+    #region [ Linked List ]
+
+    [Fact]
+    public void MergeTwoLists()
+    {
+        ListNode list1 = new(1, new(2, new(4)));
+        ListNode list2 = new(1, new(3, new(5)));
+        ListNode result = Questions_RoadMap.MergeTwoLists(list1, list2);
+        List<int> output = [];
+        while (result != null)
+        {
+            output.Add(result.val);
+            result = result.next;
+        }
+        Assert.Equal([1, 1, 2, 3, 4, 5], [.. output]);
+    }
+
     #endregion
 }
