@@ -292,5 +292,35 @@ namespace LeetCodeTestsCpp
 
 			Assert::AreEqual(expected, result);
 		}
+
+#pragma region [ RoadMap Tests ]
+
+		TEST_METHOD(Test_ListNode_HasCycle)
+		{
+			ListNode* head = createLinkedList({ 3,2,0,-4 });
+			ListNode* temp = head->next->next->next;
+			temp->next = head->next;
+			bool result = hasCycle(head);
+			temp->next = nullptr;
+			Assert::AreEqual(true, result);
+			deleteLinkedList(head);
+		}
+
+		TEST_METHOD(Test_ListNode_ReorderList)
+		{
+			ListNode* head = createLinkedList({ 1,2,3,4,5 });
+			reorderList(head);
+			std::vector<int> expected = { 1,5,2,4,3 };
+
+			std::vector<int> output = linkedListToVector(head);
+			Assert::IsTrue(output.size() == expected.size(), L"Size mismatch");
+			for (size_t i = 0; i < output.size(); ++i) {
+				Assert::AreEqual(expected[i], output[i], L"Element mismatch");
+			}
+			deleteLinkedList(head);
+		}
+
+#pragma endregion
+
 	};
 }

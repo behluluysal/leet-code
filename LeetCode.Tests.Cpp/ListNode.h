@@ -13,6 +13,7 @@ struct ListNode {
 ListNode* createLinkedList(const std::vector<int>& values);
 std::vector<int> linkedListToVector(ListNode* head);
 void deleteLinkedList(ListNode* head);
+ListNode* reverseList(ListNode* head);
 
 // Actual Methods
 // https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list
@@ -20,5 +21,16 @@ ListNode* deleteMiddle(ListNode* head);
 
 // https://leetcode.com/problems/odd-even-linked-list
 ListNode* oddEvenList(ListNode* head);
+
+#pragma region [ RoadMap ]
+
+// https://leetcode.com/problems/linked-list-cycle
+bool hasCycle(ListNode* head);
+
+// https://leetcode.com/problems/reorder-list
+void reorderList(ListNode* head);
+
+#pragma endregion
+
 
 #endif // LISTNODE_H
