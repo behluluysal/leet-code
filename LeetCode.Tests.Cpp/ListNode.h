@@ -7,6 +7,7 @@ struct ListNode {
     int val;
     ListNode* next;
     ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
 
 // Helper functions for testing
@@ -29,6 +30,9 @@ bool hasCycle(ListNode* head);
 
 // https://leetcode.com/problems/reorder-list
 void reorderList(ListNode* head);
+
+// https://leetcode.com/problems/remove-nth-node-from-end-of-list
+ListNode* removeNthFromEnd(ListNode* head, int n);
 
 #pragma endregion
 

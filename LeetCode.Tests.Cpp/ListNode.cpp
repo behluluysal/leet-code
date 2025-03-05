@@ -114,3 +114,63 @@ void reorderList(ListNode* head) {
 		secondHalfHead = secondHalfTemp;
 	}
 }
+
+ListNode* removeNthFromEnd(ListNode* head, int n) {
+	ListNode* beforeHead = new ListNode(0, head);
+	ListNode* left = beforeHead;
+	ListNode* right = head;
+	int index = 0;
+	while (right != nullptr) {
+		if (index >= n) {
+			left = left->next;
+		}
+		right = right->next;
+		index++;
+	}
+	ListNode* temp = left->next;
+	left->next = left->next->next;
+	ListNode* newHead = beforeHead->next;
+	delete(temp);
+	delete(beforeHead);
+	return newHead;
+}
+
+// https://leetcode.com/problems/copy-list-with-random-pointer
+//Node* copyRandomList(Node* head) {
+//	if (!head)
+//		return nullptr;
+//
+//	Node* cursor = head;
+//	while (cursor) {
+//		Node* temp = cursor->next;
+//		Node* copy = new Node(cursor->val);
+//		copy->next = temp;
+//		cursor->next = copy;
+//		cursor = temp;
+//	}
+//
+//	cursor = head;
+//	while (cursor) {
+//		if (cursor->random) {
+//			cursor->next->random = cursor->random->next;
+//		}
+//		else {
+//			cursor->next->random = nullptr;
+//		}
+//		cursor = cursor->next->next;
+//	}
+//	cursor = head;
+//	Node* deepCopyCursor = head->next;
+//	Node* deepCopyHead = head->next;
+//
+//	while (deepCopyCursor->next) {
+//		cursor->next = deepCopyCursor->next;
+//		cursor = cursor->next;
+//		deepCopyCursor->next = cursor->next;
+//		deepCopyCursor = deepCopyCursor->next;
+//	}
+//	deepCopyCursor->next = nullptr;
+//	cursor->next = nullptr;
+//
+//	return deepCopyHead;
+//}

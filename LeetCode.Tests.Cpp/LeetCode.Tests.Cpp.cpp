@@ -320,6 +320,20 @@ namespace LeetCodeTestsCpp
 			deleteLinkedList(head);
 		}
 
+		TEST_METHOD(Test_ListNode_RemoveNthFromEnd)
+		{
+			ListNode* head = createLinkedList({ 1,2,3,4,5 });
+			ListNode* result = removeNthFromEnd(head, 2);
+			std::vector<int> expected = { 1, 2, 3, 5 };
+
+			std::vector<int> output = linkedListToVector(head);
+			Assert::IsTrue(output.size() == expected.size(), L"Size mismatch");
+			for (size_t i = 0; i < output.size(); ++i) {
+				Assert::AreEqual(expected[i], output[i], L"Element mismatch");
+			}
+			deleteLinkedList(head);
+		}
+
 #pragma endregion
 
 	};
