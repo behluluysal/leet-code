@@ -34,6 +34,12 @@ void reorderList(ListNode* head);
 // https://leetcode.com/problems/remove-nth-node-from-end-of-list
 ListNode* removeNthFromEnd(ListNode* head, int n);
 
+// https://leetcode.com/problems/add-two-numbers
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2);
+
+// https://leetcode.com/problems/find-the-duplicate-number
+int findDuplicate(std::vector<int>& nums);
+
 #pragma endregion
 
 

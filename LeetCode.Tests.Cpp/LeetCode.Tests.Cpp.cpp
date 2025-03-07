@@ -334,6 +334,29 @@ namespace LeetCodeTestsCpp
 			deleteLinkedList(head);
 		}
 
+		TEST_METHOD(Test_ListNode_AddTwoNumbers)
+		{
+			ListNode* head = createLinkedList({ 2,4,3 });
+			ListNode* head2 = createLinkedList({ 5,6,4 });
+			ListNode* result = addTwoNumbers(head, head2);
+			std::vector<int> expected = { 7,0,8 };
+
+			std::vector<int> output = linkedListToVector(result);
+			Assert::IsTrue(output.size() == expected.size(), L"Size mismatch");
+			for (size_t i = 0; i < output.size(); ++i) {
+				Assert::AreEqual(expected[i], output[i], L"Element mismatch");
+			}
+			deleteLinkedList(head);
+			deleteLinkedList(head2);
+		}
+
+		TEST_METHOD(Test_ListNode_FindDuplicate)
+		{
+			std::vector<int> data = { 3,1,3,4,2 };
+			int result = findDuplicate(data);
+			Assert::AreEqual(3, result);
+		}
+
 #pragma endregion
 
 	};

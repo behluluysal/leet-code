@@ -174,3 +174,51 @@ ListNode* removeNthFromEnd(ListNode* head, int n) {
 //
 //	return deepCopyHead;
 //}
+
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+	ListNode* temp = new ListNode(0);
+	ListNode* current = temp;
+	int carry = 0;
+	while (l1 || l2 || carry > 0) {
+		int val1 = 0;
+		int val2 = 0;
+		if (l1)
+			val1 = l1->val;
+		if (l2)
+			val2 = l2->val;
+		int total = val1 + val2 + carry;
+		carry = total / 10;
+		total %= 10;
+
+		ListNode* newNode = new ListNode(total);
+		current->next = newNode;
+		current = current->next;
+
+		if (l1)
+			l1 = l1->next;
+		if (l2)
+			l2 = l2->next;
+	}
+	ListNode* result = temp->next;
+	delete temp;
+	return result;
+}
+
+int findDuplicate(std::vector<int>& nums) {
+	int slow = nums[0];
+	int fast = nums[0];
+
+	do {
+		slow = nums[slow];
+		fast = nums[nums[fast]];
+	} while (fast != slow);
+
+	fast = nums[0];
+
+	while (slow != fast) {
+		slow = nums[slow];
+		fast = nums[fast];
+	}
+
+	return slow;
+}
