@@ -222,3 +222,24 @@ int findDuplicate(std::vector<int>& nums) {
 
 	return slow;
 }
+
+ListNode* mergeKLists(std::vector<ListNode*>& lists) {
+	ListNode* head = new ListNode(0);
+	ListNode* current = head;
+
+	while (true) {
+		int newMin = -1;
+		for (int i = 0; i < lists.size(); i++) {
+			if (!lists[i]) continue;
+			if (newMin == -1 || lists[newMin]->val > lists[i]->val) {
+				newMin = i;
+			}
+		}
+
+		if (newMin == -1) break;
+		current->next = lists[newMin];
+		lists[newMin] = lists[newMin]->next;
+		current = current->next;
+	}
+	return head->next;
+}

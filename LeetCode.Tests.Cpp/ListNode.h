@@ -40,6 +40,9 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2);
 // https://leetcode.com/problems/find-the-duplicate-number
 int findDuplicate(std::vector<int>& nums);
 
+// https://leetcode.com/problems/merge-k-sorted-lists
+ListNode* mergeKLists(std::vector<ListNode*>& lists);
+
 #pragma endregion
 
 
