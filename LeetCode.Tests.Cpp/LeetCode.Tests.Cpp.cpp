@@ -372,6 +372,18 @@ namespace LeetCodeTestsCpp
 			deleteLinkedList(head);
 		}
 
+		TEST_METHOD(Test_ListNode_ReverseKGroup)
+		{
+			ListNode* head = createLinkedList({ 1,2,3,4,5,6 });
+			ListNode* result = reverseKGroup(head, 3);
+			std::vector<int> output = linkedListToVector(result);
+			std::vector<int> expected = { 3,2,1,6,5,4 };
+			for (size_t i = 0; i < output.size(); ++i) {
+				Assert::AreEqual(expected[i], output[i], L"Element mismatch");
+			}
+			deleteLinkedList(head);
+		}
+
 #pragma endregion
 
 	};

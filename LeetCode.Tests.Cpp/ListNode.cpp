@@ -243,3 +243,39 @@ ListNode* mergeKLists(std::vector<ListNode*>& lists) {
 	}
 	return head->next;
 }
+
+ListNode* reverseKGroup(ListNode* head, int k) {
+	ListNode* dummy = new ListNode(0);
+	dummy->next = head;
+	ListNode* result = nullptr;
+	ListNode* current = head;
+	int count = 0;
+
+	while (current) {
+		current = current->next;
+		count++;
+		if (count == k) {
+			auto [left, right] = reverseListGroup(dummy->next, k);
+			right->next = current;
+			if (!result) result = left;
+			else dummy->next = left;
+			dummy = right;
+			count = 0;
+		}
+	}
+	return result;
+}
+
+std::tuple<ListNode*, ListNode*> reverseListGroup(ListNode* head, int k) {
+	ListNode* previous = nullptr;
+	ListNode* current = head;
+	int reorderCount = 0;
+	while (reorderCount < k) {
+		ListNode* temp = current->next;
+		current->next = previous;
+		previous = current;
+		current = temp;
+		reorderCount++;
+	}
+	return {previous, head};
+}

@@ -2,6 +2,7 @@
 #define LISTNODE_H
 
 #include <vector>
+#include <tuple>
 
 struct ListNode {
     int val;
@@ -42,6 +43,10 @@ int findDuplicate(std::vector<int>& nums);
 
 // https://leetcode.com/problems/merge-k-sorted-lists
 ListNode* mergeKLists(std::vector<ListNode*>& lists);
+
+// https://neetcode.io/problems/reverse-nodes-in-k-group
+ListNode* reverseKGroup(ListNode* head, int k);
+std::tuple<ListNode*, ListNode*> reverseListGroup(ListNode* head, int k);
 
 #pragma endregion
 
