@@ -779,6 +779,49 @@ public static class Questions_RoadMap
 
     #endregion
 
+    #region [ Binary Search ]
+
+    // https://leetcode.com/problems/binary-search
+    public static int Search(int[] nums, int target)
+    {
+        int left = 0, right = nums.Length - 1;
+        while (left <= right)
+        {
+            int middle = left + ((right - left) / 2);
+            if (nums[middle] == target) return middle;
+            if (nums[middle] < target) left = middle + 1;
+            else if (nums[middle] > target) right = middle - 1;
+        }
+        return -1;
+    }
+
+    // https://leetcode.com/problems/search-a-2d-matrix
+    public static bool SearchMatrix(int[][] matrix, int target)
+    {
+        int rowLeft = 0, rowRight = matrix.Length - 1;
+        while (rowLeft <= rowRight)
+        {
+            int rowMiddle = rowLeft + ((rowRight - rowLeft) / 2);
+            if (target >= matrix[rowMiddle][0] && target <= matrix[rowMiddle][^1])
+            {
+                int columnLeft = 0, columnRight = matrix[rowMiddle].Length - 1;
+                while (columnLeft <= columnRight)
+                {
+                    int columnMiddle = columnLeft + ((columnRight - columnLeft) / 2);
+                    if (matrix[rowMiddle][columnMiddle] == target) return true;
+                    else if (matrix[rowMiddle][columnMiddle] < target) columnLeft = columnMiddle + 1;
+                    else if (matrix[rowMiddle][columnMiddle] > target) columnRight = columnMiddle - 1;
+                }
+                return false;
+            }
+            else if (matrix[rowMiddle][0] < target) rowLeft = rowMiddle + 1;
+            else if (matrix[rowMiddle][^1] > target) rowRight = rowMiddle - 1;
+        }
+        return false;
+    }
+
+    #endregion
+
     #region [ Helpers ]
 
     private static void GenerateParenthesisHelper(List<string> result, StringBuilder current, int open, int close, int max)

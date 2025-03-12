@@ -301,4 +301,24 @@ public class Questions_RoadMap_Tests
     }
 
     #endregion
+
+    #region [ Binary Search ]
+
+    [Theory]
+    [InlineData(new int[] { -1, 0, 3, 5, 9, 12 }, 9, 4)]
+    [InlineData(new int[] { -1, 0, 3, 5, 9, 12 }, 2, -1)]
+    public void Search(int[] nums, int target, int expectedOutput)
+    {
+        int output = Questions_RoadMap.Search(nums, target);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [ClassData(typeof(SearchMatrixTestData))]
+    public void SearchMatrix(int[][] matrix, int target, bool expectedOutput)
+    {
+        bool output = Questions_RoadMap.SearchMatrix(matrix, target);
+        Assert.Equal(expectedOutput, output);
+    }
+    #endregion
 }
