@@ -820,6 +820,53 @@ public static class Questions_RoadMap
         return false;
     }
 
+    // https://leetcode.com/problems/koko-eating-bananas
+    public static int MinEatingSpeed(int[] piles, int h)
+    {
+        int lastTotal = 0;
+        int left = 1;
+        int right = piles.Max();
+
+        while (left <= right)
+        {
+            int mid = (left + right) / 2;
+            long totalEatingSpeed = 0;
+
+            foreach (int pile in piles)
+            {
+                totalEatingSpeed += (pile + mid - 1) / mid;
+            }
+
+            if (totalEatingSpeed <= h)
+            {
+                lastTotal = mid;
+                right = mid - 1;
+            }
+            else
+                left = mid + 1;
+        }
+        return lastTotal;
+    }
+
+    // https://leetcode.com/problems/find-minimum-in-rotated-sorted-array
+    public static int FindMin(int[] nums)
+    {
+        int left = 0;
+        int right = nums.Length - 1;
+
+        while (left < right)
+        {
+            int mid = (left + right) / 2;
+
+            if (nums[mid] > nums[right])
+                left = mid + 1;
+            else
+                right = mid;
+        }
+        return nums[left];
+    }
+
+
     #endregion
 
     #region [ Helpers ]

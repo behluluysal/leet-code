@@ -320,5 +320,28 @@ public class Questions_RoadMap_Tests
         bool output = Questions_RoadMap.SearchMatrix(matrix, target);
         Assert.Equal(expectedOutput, output);
     }
+
+    [Theory]
+    [InlineData(new int[] { 3, 6, 7, 11 }, 8, 4)]
+    [InlineData(new int[] { 30, 11, 23, 4, 20 }, 5, 30)]
+    [InlineData(new int[] { 30, 11, 23, 4, 20 }, 6, 23)]
+    [InlineData(new int[] { 805306368, 805306368, 805306368 }, 1000000000, 3)]
+    public void MinEatingSpeed(int[] piles, int target, int expectedOutput)
+    {
+        int output = Questions_RoadMap.MinEatingSpeed(piles, target);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { 3, 4, 5, 6, 1, 2 }, 1)]
+    [InlineData(new int[] { 4, 5, 0, 1, 2, 3 }, 0)]
+    [InlineData(new int[] { 4, 5, 6, 7 }, 4)]
+    [InlineData(new int[] { 1, 2 }, 1)]
+    public void FindMin(int[] nums, int expectedOutput)
+    {
+        int output = Questions_RoadMap.FindMin(nums);
+        Assert.Equal(expectedOutput, output);
+    }
+
     #endregion
 }
