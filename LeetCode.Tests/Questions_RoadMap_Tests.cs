@@ -343,5 +343,16 @@ public class Questions_RoadMap_Tests
         Assert.Equal(expectedOutput, output);
     }
 
+    [Theory]
+    [InlineData(new int[] { 4, 5, 6, 7, 0, 1, 2 }, 3, -1)]
+    [InlineData(new int[] { 4, 5, 6, 7, 0, 1, 2 }, 0, 4)]
+    [InlineData(new int[] { 4, 5, 6, 7, 0, 1, 2 }, 1, 5)]
+    [InlineData(new int[] { 1 }, 0, -1)]
+    public void SearchInRotatedSortedArray(int[] nums, int target, int expectedOutput)
+    {
+        int output = Questions_RoadMap.SearchInRotatedSortedArray(nums, target);
+        Assert.Equal(expectedOutput, output);
+    }
+
     #endregion
 }

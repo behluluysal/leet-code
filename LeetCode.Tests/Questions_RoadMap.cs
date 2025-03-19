@@ -866,6 +866,45 @@ public static class Questions_RoadMap
         return nums[left];
     }
 
+    // https://leetcode.com/problems/search-in-rotated-sorted-array
+    public static int SearchInRotatedSortedArray(int[] nums, int target)
+    {
+        int left = 0;
+        int right = nums.Length - 1;
+
+        while (left < right)
+        {
+            int mid = (left + right) / 2;
+
+            if (nums[mid] > nums[right])
+                left = mid + 1;
+            else
+                right = mid;
+        }
+
+        // nums[left] is the pivot
+        // target is on the right side of the pivot
+        if (target >= nums[left] && target <= nums[^1])
+        {
+            right = nums.Length - 1;
+        }
+        else // target is on the left side of the pivot
+        {
+            right = left;
+            left = 0;
+        }
+
+        while (left < right)
+        {
+            int mid = (left + right) / 2;
+
+            if (target > nums[mid])
+                left = mid + 1;
+            else
+                right = mid;
+        }
+        return nums[left] == target ? left : -1;
+    }
 
     #endregion
 
