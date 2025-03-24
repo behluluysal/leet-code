@@ -384,6 +384,28 @@ namespace LeetCodeTestsCpp
 			deleteLinkedList(head);
 		}
 
+		TEST_METHOD(Test_TreeNode_InvertTree)
+		{
+			TreeNode* head = createBinaryTree({ 4, 2, 7, 1, 3, 6, 9 });
+			head = invertTree(head);
+			std::vector<int> output = binaryTreeToVector(head);
+			std::vector<int> expected = { 4, 7, 2, 9, 6, 3, 1 };
+			output.erase(std::remove(output.begin(), output.end(), -1), output.end());
+			Assert::IsTrue(output.size() == expected.size(), L"Size mismatch");
+			for (size_t i = 0; i < output.size(); ++i) {
+				Assert::AreEqual(expected[i], output[i], L"Element mismatch");
+			}
+			deleteBinaryTree(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_DiameterOfBinaryTree)
+		{
+			TreeNode* head = createBinaryTree({ 1, 2, 3, 4, 5 });
+			int max = diameterOfBinaryTree(head);
+			Assert::IsTrue(max == 3, L"Expected output mismatch");
+			deleteBinaryTree(head);
+		}
+
 #pragma endregion
 
 	};

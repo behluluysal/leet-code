@@ -53,4 +53,15 @@ TreeNode* searchBST(TreeNode* root, int val);
 // https://leetcode.com/problems/delete-node-in-a-bst/description
 TreeNode* deleteNode(TreeNode* root, int key);
 
+#pragma region RoadMap Questions
+
+// https://leetcode.com/problems/invert-binary-tree
+TreeNode* invertTree(TreeNode* root);
+
+// https://leetcode.com/problems/diameter-of-binary-tree
+int diameterOfBinaryTree(TreeNode* root);
+int diameterOfBinaryTreeDfs(TreeNode* root, int& max);
+
+#pragma endregion
+
 #endif // TREENODE_H

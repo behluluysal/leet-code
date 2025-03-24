@@ -209,6 +209,39 @@ TreeNode* deleteNode(TreeNode* root, int key) {
 	return root;
 }
 
+#pragma region RoadMap Questions
+
+TreeNode* invertTree(TreeNode* root) {
+	if (!root) return nullptr;
+
+	TreeNode* temp = root->left;
+
+	root->left = root->right;
+	root->right = temp;
+
+	invertTree(root->left);
+	invertTree(root->right);
+	return root;
+}
+
+int diameterOfBinaryTree(TreeNode* root) {
+	int max = 0;
+	diameterOfBinaryTreeDfs(root, max);
+	return max;
+}
+
+int diameterOfBinaryTreeDfs(TreeNode* root, int& max) {
+	if (!root) return 0;
+
+	int left = diameterOfBinaryTreeDfs(root->left, max);
+	int right = diameterOfBinaryTreeDfs(root->right, max);
+	max = std::max(max, left + right);
+	return 1 + std::max(left, right);
+}
+
+#pragma endregion
+
+
 // Helper methods
 std::vector<int> collectLeafNodes(TreeNode* head, std::vector<int>& endLeaves) {
 	if (!head) return endLeaves;
