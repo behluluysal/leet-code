@@ -301,4 +301,58 @@ public class Questions_RoadMap_Tests
     }
 
     #endregion
+
+    #region [ Binary Search ]
+
+    [Theory]
+    [InlineData(new int[] { -1, 0, 3, 5, 9, 12 }, 9, 4)]
+    [InlineData(new int[] { -1, 0, 3, 5, 9, 12 }, 2, -1)]
+    public void Search(int[] nums, int target, int expectedOutput)
+    {
+        int output = Questions_RoadMap.Search(nums, target);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [ClassData(typeof(SearchMatrixTestData))]
+    public void SearchMatrix(int[][] matrix, int target, bool expectedOutput)
+    {
+        bool output = Questions_RoadMap.SearchMatrix(matrix, target);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { 3, 6, 7, 11 }, 8, 4)]
+    [InlineData(new int[] { 30, 11, 23, 4, 20 }, 5, 30)]
+    [InlineData(new int[] { 30, 11, 23, 4, 20 }, 6, 23)]
+    [InlineData(new int[] { 805306368, 805306368, 805306368 }, 1000000000, 3)]
+    public void MinEatingSpeed(int[] piles, int target, int expectedOutput)
+    {
+        int output = Questions_RoadMap.MinEatingSpeed(piles, target);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { 3, 4, 5, 6, 1, 2 }, 1)]
+    [InlineData(new int[] { 4, 5, 0, 1, 2, 3 }, 0)]
+    [InlineData(new int[] { 4, 5, 6, 7 }, 4)]
+    [InlineData(new int[] { 1, 2 }, 1)]
+    public void FindMin(int[] nums, int expectedOutput)
+    {
+        int output = Questions_RoadMap.FindMin(nums);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    [Theory]
+    [InlineData(new int[] { 4, 5, 6, 7, 0, 1, 2 }, 3, -1)]
+    [InlineData(new int[] { 4, 5, 6, 7, 0, 1, 2 }, 0, 4)]
+    [InlineData(new int[] { 4, 5, 6, 7, 0, 1, 2 }, 1, 5)]
+    [InlineData(new int[] { 1 }, 0, -1)]
+    public void SearchInRotatedSortedArray(int[] nums, int target, int expectedOutput)
+    {
+        int output = Questions_RoadMap.SearchInRotatedSortedArray(nums, target);
+        Assert.Equal(expectedOutput, output);
+    }
+
+    #endregion
 }

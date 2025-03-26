@@ -209,6 +209,68 @@ TreeNode* deleteNode(TreeNode* root, int key) {
 	return root;
 }
 
+#pragma region RoadMap Questions
+
+TreeNode* invertTree(TreeNode* root) {
+	if (!root) return nullptr;
+
+	TreeNode* temp = root->left;
+
+	root->left = root->right;
+	root->right = temp;
+
+	invertTree(root->left);
+	invertTree(root->right);
+	return root;
+}
+
+int diameterOfBinaryTree(TreeNode* root) {
+	int max = 0;
+	diameterOfBinaryTreeDfs(root, max);
+	return max;
+}
+
+int diameterOfBinaryTreeDfs(TreeNode* root, int& max) {
+	if (!root) return 0;
+
+	int left = diameterOfBinaryTreeDfs(root->left, max);
+	int right = diameterOfBinaryTreeDfs(root->right, max);
+	max = std::max(max, left + right);
+	return 1 + std::max(left, right);
+}
+
+bool isBalanced(TreeNode* root) {
+	bool balanced = true;
+	isBalancedDfs(root, balanced);
+	return balanced;
+}
+
+int isBalancedDfs(TreeNode* root, bool& balanced) {
+	if (!root || !balanced) return 0;
+
+	int leftHeight = isBalancedDfs(root->left, balanced);
+	int rightHeight = isBalancedDfs(root->right, balanced);
+
+	if (std::abs(leftHeight - rightHeight) > 1)
+	{
+		balanced = false;
+	}
+	return 1 + std::max(leftHeight, rightHeight);
+}
+
+bool isSameTree(TreeNode* p, TreeNode* q) {
+	if (!p && !q) return true;
+	if ((p && !q) || (!p && q)) return false;
+
+	if (p->val == q->val)
+		return (isSameTree(p->left, q->left) && isSameTree(p->right, q->right));
+	else
+		return false;
+}
+
+#pragma endregion
+
+
 // Helper methods
 std::vector<int> collectLeafNodes(TreeNode* head, std::vector<int>& endLeaves) {
 	if (!head) return endLeaves;

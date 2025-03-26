@@ -357,6 +357,91 @@ namespace LeetCodeTestsCpp
 			Assert::AreEqual(3, result);
 		}
 
+		TEST_METHOD(Test_ListNode_MergeKLists)
+		{
+			ListNode* head = createLinkedList({ 1,4,5 });
+			ListNode* head2 = createLinkedList({ 1,3,4 });
+			ListNode* head3 = createLinkedList({ 2,6 });
+			std::vector<ListNode*> data = { head, head2, head3 };
+			ListNode* result = mergeKLists(data);
+			std::vector<int> output = linkedListToVector(result);
+			std::vector<int> expected = { 1,1,2,3,4,4,5,6 };
+			for (size_t i = 0; i < output.size(); ++i) {
+				Assert::AreEqual(expected[i], output[i], L"Element mismatch");
+			}
+			deleteLinkedList(head);
+		}
+
+		TEST_METHOD(Test_ListNode_ReverseKGroup)
+		{
+			ListNode* head = createLinkedList({ 1,2,3,4,5,6 });
+			ListNode* result = reverseKGroup(head, 3);
+			std::vector<int> output = linkedListToVector(result);
+			std::vector<int> expected = { 3,2,1,6,5,4 };
+			for (size_t i = 0; i < output.size(); ++i) {
+				Assert::AreEqual(expected[i], output[i], L"Element mismatch");
+			}
+			deleteLinkedList(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_InvertTree)
+		{
+			TreeNode* head = createBinaryTree({ 4, 2, 7, 1, 3, 6, 9 });
+			head = invertTree(head);
+			std::vector<int> output = binaryTreeToVector(head);
+			std::vector<int> expected = { 4, 7, 2, 9, 6, 3, 1 };
+			output.erase(std::remove(output.begin(), output.end(), -1), output.end());
+			Assert::IsTrue(output.size() == expected.size(), L"Size mismatch");
+			for (size_t i = 0; i < output.size(); ++i) {
+				Assert::AreEqual(expected[i], output[i], L"Element mismatch");
+			}
+			deleteBinaryTree(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_DiameterOfBinaryTree)
+		{
+			TreeNode* head = createBinaryTree({ 1, 2, 3, 4, 5 });
+			int max = diameterOfBinaryTree(head);
+			Assert::IsTrue(max == 3, L"Expected output mismatch");
+			deleteBinaryTree(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_IsBalanced)
+		{
+			TreeNode* head = createBinaryTree({ 1,2,3,-1,-1,4,-1,5 });
+			bool result = isBalanced(head);
+			Assert::AreEqual(false, result, L"Result was different.");
+			deleteBinaryTree(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_IsBalanced2)
+		{
+			TreeNode* head = createBinaryTree({ 1,2,3,-1,-1,4 });
+			bool result = isBalanced(head);
+			Assert::AreEqual(true, result, L"Result was different.");
+			deleteBinaryTree(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_IsSameTree)
+		{
+			TreeNode* p = createBinaryTree({ 1,2,3 });
+			TreeNode* q = createBinaryTree({ 1,2,3 });
+			bool result = isSameTree(p, q);
+			Assert::AreEqual(true, result, L"Result was different.");
+			deleteBinaryTree(p);
+			deleteBinaryTree(q);
+		}
+
+		TEST_METHOD(Test_TreeNode_IsSameTree2)
+		{
+			TreeNode* p = createBinaryTree({ 4, 7 });
+			TreeNode* q = createBinaryTree({ 4, -1, 7 });
+			bool result = isSameTree(p, q);
+			Assert::AreEqual(false, result, L"Result was different.");
+			deleteBinaryTree(p);
+			deleteBinaryTree(q);
+		}
+
 #pragma endregion
 
 	};

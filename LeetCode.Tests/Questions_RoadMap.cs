@@ -779,6 +779,135 @@ public static class Questions_RoadMap
 
     #endregion
 
+    #region [ Binary Search ]
+
+    // https://leetcode.com/problems/binary-search
+    public static int Search(int[] nums, int target)
+    {
+        int left = 0, right = nums.Length - 1;
+        while (left <= right)
+        {
+            int middle = left + ((right - left) / 2);
+            if (nums[middle] == target) return middle;
+            if (nums[middle] < target) left = middle + 1;
+            else if (nums[middle] > target) right = middle - 1;
+        }
+        return -1;
+    }
+
+    // https://leetcode.com/problems/search-a-2d-matrix
+    public static bool SearchMatrix(int[][] matrix, int target)
+    {
+        int rowLeft = 0, rowRight = matrix.Length - 1;
+        while (rowLeft <= rowRight)
+        {
+            int rowMiddle = rowLeft + ((rowRight - rowLeft) / 2);
+            if (target >= matrix[rowMiddle][0] && target <= matrix[rowMiddle][^1])
+            {
+                int columnLeft = 0, columnRight = matrix[rowMiddle].Length - 1;
+                while (columnLeft <= columnRight)
+                {
+                    int columnMiddle = columnLeft + ((columnRight - columnLeft) / 2);
+                    if (matrix[rowMiddle][columnMiddle] == target) return true;
+                    else if (matrix[rowMiddle][columnMiddle] < target) columnLeft = columnMiddle + 1;
+                    else if (matrix[rowMiddle][columnMiddle] > target) columnRight = columnMiddle - 1;
+                }
+                return false;
+            }
+            else if (matrix[rowMiddle][0] < target) rowLeft = rowMiddle + 1;
+            else if (matrix[rowMiddle][^1] > target) rowRight = rowMiddle - 1;
+        }
+        return false;
+    }
+
+    // https://leetcode.com/problems/koko-eating-bananas
+    public static int MinEatingSpeed(int[] piles, int h)
+    {
+        int lastTotal = 0;
+        int left = 1;
+        int right = piles.Max();
+
+        while (left <= right)
+        {
+            int mid = (left + right) / 2;
+            long totalEatingSpeed = 0;
+
+            foreach (int pile in piles)
+            {
+                totalEatingSpeed += (pile + mid - 1) / mid;
+            }
+
+            if (totalEatingSpeed <= h)
+            {
+                lastTotal = mid;
+                right = mid - 1;
+            }
+            else
+                left = mid + 1;
+        }
+        return lastTotal;
+    }
+
+    // https://leetcode.com/problems/find-minimum-in-rotated-sorted-array
+    public static int FindMin(int[] nums)
+    {
+        int left = 0;
+        int right = nums.Length - 1;
+
+        while (left < right)
+        {
+            int mid = (left + right) / 2;
+
+            if (nums[mid] > nums[right])
+                left = mid + 1;
+            else
+                right = mid;
+        }
+        return nums[left];
+    }
+
+    // https://leetcode.com/problems/search-in-rotated-sorted-array
+    public static int SearchInRotatedSortedArray(int[] nums, int target)
+    {
+        int left = 0;
+        int right = nums.Length - 1;
+
+        while (left < right)
+        {
+            int mid = (left + right) / 2;
+
+            if (nums[mid] > nums[right])
+                left = mid + 1;
+            else
+                right = mid;
+        }
+
+        // nums[left] is the pivot
+        // target is on the right side of the pivot
+        if (target >= nums[left] && target <= nums[^1])
+        {
+            right = nums.Length - 1;
+        }
+        else // target is on the left side of the pivot
+        {
+            right = left;
+            left = 0;
+        }
+
+        while (left < right)
+        {
+            int mid = (left + right) / 2;
+
+            if (target > nums[mid])
+                left = mid + 1;
+            else
+                right = mid;
+        }
+        return nums[left] == target ? left : -1;
+    }
+
+    #endregion
+
     #region [ Helpers ]
 
     private static void GenerateParenthesisHelper(List<string> result, StringBuilder current, int open, int close, int max)
