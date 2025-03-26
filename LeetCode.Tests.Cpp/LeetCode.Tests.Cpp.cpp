@@ -406,6 +406,42 @@ namespace LeetCodeTestsCpp
 			deleteBinaryTree(head);
 		}
 
+		TEST_METHOD(Test_TreeNode_IsBalanced)
+		{
+			TreeNode* head = createBinaryTree({ 1,2,3,-1,-1,4,-1,5 });
+			bool result = isBalanced(head);
+			Assert::AreEqual(false, result, L"Result was different.");
+			deleteBinaryTree(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_IsBalanced2)
+		{
+			TreeNode* head = createBinaryTree({ 1,2,3,-1,-1,4 });
+			bool result = isBalanced(head);
+			Assert::AreEqual(true, result, L"Result was different.");
+			deleteBinaryTree(head);
+		}
+
+		TEST_METHOD(Test_TreeNode_IsSameTree)
+		{
+			TreeNode* p = createBinaryTree({ 1,2,3 });
+			TreeNode* q = createBinaryTree({ 1,2,3 });
+			bool result = isSameTree(p, q);
+			Assert::AreEqual(true, result, L"Result was different.");
+			deleteBinaryTree(p);
+			deleteBinaryTree(q);
+		}
+
+		TEST_METHOD(Test_TreeNode_IsSameTree2)
+		{
+			TreeNode* p = createBinaryTree({ 4, 7 });
+			TreeNode* q = createBinaryTree({ 4, -1, 7 });
+			bool result = isSameTree(p, q);
+			Assert::AreEqual(false, result, L"Result was different.");
+			deleteBinaryTree(p);
+			deleteBinaryTree(q);
+		}
+
 #pragma endregion
 
 	};

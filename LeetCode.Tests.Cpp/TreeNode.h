@@ -62,6 +62,13 @@ TreeNode* invertTree(TreeNode* root);
 int diameterOfBinaryTree(TreeNode* root);
 int diameterOfBinaryTreeDfs(TreeNode* root, int& max);
 
+// https://leetcode.com/problems/balanced-binary-tree
+bool isBalanced(TreeNode* root);
+int isBalancedDfs(TreeNode* root, bool& balanced);
+
+// 
+bool isSameTree(TreeNode* p, TreeNode* q);
+
 #pragma endregion
 
 #endif // TREENODE_H

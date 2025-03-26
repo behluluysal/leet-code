@@ -239,6 +239,35 @@ int diameterOfBinaryTreeDfs(TreeNode* root, int& max) {
 	return 1 + std::max(left, right);
 }
 
+bool isBalanced(TreeNode* root) {
+	bool balanced = true;
+	isBalancedDfs(root, balanced);
+	return balanced;
+}
+
+int isBalancedDfs(TreeNode* root, bool& balanced) {
+	if (!root || !balanced) return 0;
+
+	int leftHeight = isBalancedDfs(root->left, balanced);
+	int rightHeight = isBalancedDfs(root->right, balanced);
+
+	if (std::abs(leftHeight - rightHeight) > 1)
+	{
+		balanced = false;
+	}
+	return 1 + std::max(leftHeight, rightHeight);
+}
+
+bool isSameTree(TreeNode* p, TreeNode* q) {
+	if (!p && !q) return true;
+	if ((p && !q) || (!p && q)) return false;
+
+	if (p->val == q->val)
+		return (isSameTree(p->left, q->left) && isSameTree(p->right, q->right));
+	else
+		return false;
+}
+
 #pragma endregion
 
 
